@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<body id="roles-page">
+  <main class="roles-main">
+    <!--This is the role selection form-->
+    <section class="roles-section">
+      <form class="role-form" action="/set-role" method="GET">
+        <h3>Select your role to continue:</h3>
+        <section class="role-buttons">
+          <button type="submit" name="role" value="Researcher" class="roles">Researcher</button>
+          <button type="submit" name="role" value="Reviewer" class="roles">Reviewer</button>
+          <button type="submit" name="role" value="Admin" class="roles">Admin</button>
+        </section>
+      </form>
+    </section>
+  </main>
+</body>
+
+<%- include('partials/footer') %>
