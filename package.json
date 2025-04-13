@@ -4,7 +4,7 @@
   "description": "install this before anything:\r  npm init -y",
   "main": "index.js",
   "scripts": {
-    "test": "node server.js"
+    "test": "node BackEnd/server.js"
   },
   "repository": {
     "type": "git",
