@@ -23,7 +23,7 @@ app.use(express.json());
 
 // Here i initialise sessions 
 app.use(express.urlencoded({ extended: true }));
-app.use(session({secret: "secret",resave: false,saveUninitialized: false}));
+app.use(session({secret: process.env.SESSION_SECRET,resave: false,saveUninitialized: false}));
 
 app.use(passport.initialize());
 app.use(passport.session());
