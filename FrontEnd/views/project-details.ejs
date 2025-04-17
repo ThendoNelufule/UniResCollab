@@ -1,0 +1,10 @@
+<h2><%= project.title %></h2>
+<p><strong>Description:</strong> <%= project.description %></p>
+<p><strong>Requirements:</strong> <%= project.requirements.join(', ') %></p>
+<% if (project.isPublic) { %>
+    <p><strong>This project is visible to everyone (Public).</strong></p>
+<% } else { %>
+    <p><strong>This project is private and only you can see it.</strong></p>
+<% } %>
+  
+<!-- PLEASE make sure that you have these when you design the UI, you can design them to however you like -->

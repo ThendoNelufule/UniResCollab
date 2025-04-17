@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<body id="login-page">
+  <!-- Main Content Wrapper -->
+  <main class="auth-container">
+    <!-- Login Form Section -->
+    <section class="auth-box login-box">
+      
+        <h2>Sign In</h2>
+        <form action="/auth/google" method="GET">
+          <button type="submit" class="auth-button google-btn">
+            <i class="fab fa-google"></i> Continue with Google
+          </button>
+        </form>
+      
+        <form action="/auth/github" method="GET">
+          <button type="submit" class="auth-button github-btn">
+            <i class="fab fa-github"></i> Continue with GitHub
+          </button>
+        </form>
+    </section>
+
+    <!-- Call to Sign Up Section -->
+    <section class="auth-box alt-box" id="container2">
+      <h2>Welcome Back!</h2>
+      <p>Don't have an account?</p>
+      <form action="/register" method="GET">
+        <button type="submit" class="auth-button alt-button">Sign Up</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+<%- include('partials/footer') %>

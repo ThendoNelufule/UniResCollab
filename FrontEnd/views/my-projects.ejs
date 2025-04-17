@@ -1,0 +1,14 @@
+<h2>Your Projects</h2>
+
+<ul>
+  <% if (projects.length === 0) { %>
+    <p>You have no projects yet.</p>
+  <% } else { %>
+    <% projects.forEach(project => { %>
+      <li>
+        <a href="/researcher/projects/<%= project._id %>"><%= project.title %></a>
+      </li>
+    <% }) %>
+  <% } %>
+</ul>
+<!-- PLEASE make sure that you have these when you design the UI, you can DESIGN them to however you like -->

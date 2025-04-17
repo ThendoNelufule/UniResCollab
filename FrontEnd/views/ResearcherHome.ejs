@@ -1,0 +1,13 @@
+<h1>This is the Researcher's Home Page</h1>
+
+<p>Welcome, <%= user.username %>!</p>
+
+<form action="/logout" method="get">
+    <button type="submit">Logout</button>
+</form>
+<form action="/researcher/projects/create" method="get">
+    <button type="submit">Create Project</button>
+</form>
+<form action="/researcher/projects/my-projects" method="get">
+    <button type="submit">View My Projects</button>
+</form>
