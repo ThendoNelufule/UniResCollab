@@ -12,6 +12,7 @@ const { DB } = require('./config/database');
 const app = express();
 const PORT = 4000;
 
+
 //This Middleware is for rendering the ejs
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
