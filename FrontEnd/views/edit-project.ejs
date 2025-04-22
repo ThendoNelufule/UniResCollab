@@ -10,14 +10,15 @@
         <% } %>
         
         <header class="creation-header">
-            <h1 class="accent-gradient">Launch New Research Project</h1>
-            <h3 class="creation-step">Project Setup</h3>
+            <h1 class="accent-gradient">EDIT Research Project</h1>
+            <h3 class="creation-step">Project editing</h3>
             <ol class="creation-progress" aria-label="Project creation progress">
                 <li class="current" aria-current="step">Core Setup</li>
             </ol>
         </header>
     
-        <form class="research-architect" action="/researcher/projects/create" method="POST" novalidate>
+        <form class="research-architect" action="<%= project ? '/researcher/projects/project-details/' + project._id + '/edit' : '/researcher/projects/create' %>"
+            method="POST" novalidate>
             <!-- Research Blueprint -->
             <section class="form-panel" aria-labelledby="blueprint-heading">
                 <h2 id="blueprint-heading">
@@ -33,6 +34,7 @@
                     <label for="title">
                         Project Title*
                         <input type="text" id="title" name="title" required
+                               value="<%= project?.title || '' %>"
                                placeholder="Genomic Analysis of Coastal Ecosystems"
                                minlength="10"
                                aria-describedby="titleHelp">
@@ -49,22 +51,22 @@
                         <select id="domain" name="domain" required>
                             <option value="">Select research category...</option>
                             <optgroup label="Science Faculty">
-                                <option value="Information Technology">IT/Computer Science</option>
-                                <option value="Geology">Geological Science</option>
-                                <option value="Actuary">Actuarial science</option>
+                                <option value="Information Technology" <%= project?.domain === 'Information Technology' ? 'selected' : '' %>>IT/Computer Science</option>
+                                <option value="Geology" <%= project?.domain === 'Geology' ? 'selected' : '' %>>Geological Science</option>
+                                <option value="Actuary" <%= project?.domain === 'Actuary' ? 'selected' : '' %>>Actuarial science</option>
                             </optgroup>
                             <optgroup label="Health Faculty">
-                                <option value="Medicine">Medical Science</option>
-                                <option value="Pharmacy">Pharmatical Science</option>
-                                <option value="Dental"> Dental Science</option>
-                                <option value="Radiology"> Radiological Science</option>
+                                <option value="Medicine" <%= project?.domain === 'Medicine' ? 'selected' : '' %>>Medical Science</option>
+                                <option value="Pharmacy" <%= project?.domain === 'Pharmacy' ? 'selected' : '' %>>Pharmaceutical Science</option>
+                                <option value="Dental" <%= project?.domain === 'Dental' ? 'selected' : '' %>>Dental Science</option>
+                                <option value="Radiology" <%= project?.domain === 'Radiology' ? 'selected' : '' %>>Radiological Science</option>
                             </optgroup>
                             <optgroup label="Engineering Faculty">
-                                <option value="Mining">Mining Engineering</option>
-                                <option value="Chemical">Chemical Engineering</option>
-                                <option value="Electrical">Electrical Engineering</option>
-                                <option value="Mechanical">Mechanical Engineering</option>
-                                <option value="Civil">Civil Engineering</option>
+                                <option value="Mining" <%= project?.domain === 'Mining' ? 'selected' : '' %>>Mining Engineering</option>
+                                <option value="Chemical" <%= project?.domain === 'Chemical' ? 'selected' : '' %>>Chemical Engineering</option>
+                                <option value="Electrical" <%= project?.domain === 'Electrical' ? 'selected' : '' %>>Electrical Engineering</option>
+                                <option value="Mechanical" <%= project?.domain === 'Mechanical' ? 'selected' : '' %>>Mechanical Engineering</option>
+                                <option value="Civil" <%= project?.domain === 'Civil' ? 'selected' : '' %>>Civil Engineering</option>
                             </optgroup>
                         </select>
                     </label>
@@ -79,7 +81,7 @@
                         <textarea id="abstract" name="abstract" rows="6" required
                                   placeholder="Describe your research objectives, methodology, and expected impact..."
                                   minlength="10" maxlength="2000" 
-                                  aria-describedby="abstractHelp"></textarea>
+                                  aria-describedby="abstractHelp"><%= project?.abstract || '' %></textarea>
                         <small id="abstractHelp">Structured abstract (250-2000 words). Include: Background, Objectives, Methods, Expected Outcomes</small>
                     </label>
 
@@ -102,6 +104,7 @@
                         <label for="startDate">
                             Initiation Date*
                             <input type="date" id="startDate" name="startDate" required 
+                                   value="<%= project?.startDate?.toISOString().split('T')[0] || '' %>"
                                    min="<%= new Date().toISOString().split('T')[0] %>" 
                                    max="2027-12-31">
                         </label>
@@ -109,6 +112,7 @@
                         <label for="endDate">
                             Projected Completion*
                             <input type="date" id="endDate" name="endDate" required
+                                   value="<%= project?.endDate?.toISOString().split('T')[0] || '' %>"
                                    min="<%= new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().split('T')[0] %>"
                                    max="2030-12-31">
                         </label>
@@ -121,27 +125,27 @@
                     
                     <ul class="methodology-tags" role="group" aria-labelledby="methodology-label">
                         <li>
-                            <input type="checkbox" id="experimental" name="methodology" value="experimental">
+                            <input type="checkbox" id="experimental" name="methodology" value="experimental" <%= project?.methodology?.includes('experimental') ? 'checked' : '' %>>
                             <label for="experimental">Experimental Research</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="computational" name="methodology" value="computational">
+                            <input type="checkbox" id="computational" name="methodology" value="computational" <%= project?.methodology?.includes('computational') ? 'checked' : '' %>>
                             <label for="computational">Computational Modeling</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="fieldwork" name="methodology" value="fieldwork">
+                            <input type="checkbox" id="fieldwork" name="methodology" value="fieldwork" <%= project?.methodology?.includes('fieldwork') ? 'checked' : '' %>>
                             <label for="fieldwork">Fieldwork & Observation</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="clinical" name="methodology" value="clinical">
+                            <input type="checkbox" id="clinical" name="methodology" value="clinical" <%= project?.methodology?.includes('clinical') ? 'checked' : '' %>>
                             <label for="clinical">Clinical Trials</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="archival" name="methodology" value="archival">
+                            <input type="checkbox" id="archival" name="methodology" value="archival" <%= project?.methodology?.includes('archival') ? 'checked' : '' %>>
                             <label for="archival">Archival Research</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="survey" name="methodology" value="survey">
+                            <input type="checkbox" id="survey" name="methodology" value="survey" <%= project?.methodology?.includes('survey') ? 'checked' : '' %>>
                             <label for="survey">Survey Methodology</label>
                         </li>
                     </ul>
@@ -161,79 +165,32 @@
                 <fieldset class="form-group">
                     <legend>Team Composition</legend>
                     
-                    <label for="pi">
-                        Principal Investigator*
-                        <input type="text" id="pi" name="pi" required
-                               placeholder="Dr. Jane Researcher"
-                               aria-describedby="piHelp">
-                        <small id="piHelp">Full name with title</small>
-                    </label>
-    
-                    <label for="institution">
-                        Lead Institution*
-                        <input type="text" id="institution" name="institution" required
-                               placeholder="University of Science"
-                               aria-describedby="institutionHelp">
-                        <small id="institutionHelp">Primary academic affiliation</small>
+                    <label for="principalInvestigator">
+                        Principal Investigator (PI)
+                        <input type="text" id="principalInvestigator" name="principalInvestigator" 
+                               value="<%= project?.principalInvestigator || '' %>" required
+                               placeholder="Dr. Susan Wright, Head of Genomic Research">
                     </label>
                 </fieldset>
     
                 <fieldset class="form-group">
-                    <legend>Project Visibility*</legend>
+                    <legend>Institution</legend>
                     
-                    <ul class="visibility-options" role="radiogroup" aria-labelledby="visibility-label">
-                        <li>
-                            <input type="radio" id="private" name="visibility" value="private">
-                            <label for="private">
-                                <strong>Private Cohort</strong>
-                                <span>Invite-only access</span>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="radio" id="institutional" name="visibility" value="institutional">
-                            <label for="institutional">
-                                <strong>Institutional Network</strong>
-                                <span>Department-wide visibility</span>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="radio" id="public" name="visibility" value="public">
-                            <label for="public">
-                                <strong>Public Domain</strong>
-                                <span>Open discovery & collaboration</span>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="radio" id="embargoed" name="visibility" value="embargoed">
-                            <label for="embargoed">
-                                <strong>Embargoed Release</strong>
-                                <span>Public after specified period</span>
-                            </label>
-                        </li>
-                    </ul>
+                    <label for="institution">
+                        Affiliated Institution
+                        <input type="text" id="institution" name="institution"
+                               value="<%= project?.institution || '' %>" required
+                               placeholder="Harvard Medical School">
+                    </label>
                 </fieldset>
             </section>
-    
-    
-            <!-- Action Nexus -->
-            <nav class="action-nexus" aria-label="Form actions">
+            <section class="form-actions">
                 <button type="submit" class="launch-button">
                     <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M13 2v10h7V8l-6-6zM4 22h16v-2H4V2H2v20h2z"/></svg>
-                    Launch Research Matrix
+                    SUBMIT CHANGES
                 </button>
-                <button type="reset" class="secondary-button">
-                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-                    Reset Form
-                </button>
-                <a href="/researcher/Home" class="navigation-link">
-                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
-                    Return to Dashboard
-                </a>
-            </nav>
+            </section>
         </form>
     </main>
-
 </body>
-
-
 <%- include('partials/footer') %>

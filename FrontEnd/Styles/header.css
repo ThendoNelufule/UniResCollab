@@ -1,0 +1,216 @@
+/* Header Styles */
+:root {
+    --space-cadet: #2B2D42;
+    --imperial-red: #EF233C;
+    --honeydew: #F1FAEE;
+    --powder-blue: #A8DADC;
+    --celadon-blue: #457B9D;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header Styles */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--space-cadet);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Add this to your main content container */
+.ResearcherHomeContainer,
+.main-content {
+    margin-top: 80px; /* Match header height */
+    min-height: calc(100vh - 80px); /* Adjust for footer */
+}
+
+.navbar {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px; /* Fixed header height */
+}
+
+/* Add to your root variables */
+:root {
+    --header-height: 80px;
+}
+
+/* Update existing header CSS */
+.site-header {
+    height: var(--header-height);
+}
+
+/* Update main content spacing */
+main#researcher {
+    padding-top: var(--header-height);
+}
+.navbar {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--honeydew);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.brand-link svg {
+    width: 36px;
+    height: 36px;
+    fill: var(--powder-blue);
+    transition: var(--transition);
+}
+
+.brand-link:hover {
+    transform: translateY(-2px);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--honeydew);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: var(--transition);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--imperial-red);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.toggle-ai-btn {
+    background: linear-gradient(135deg, var(--celadon-blue), var(--powder-blue));
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: var(--transition);
+}
+
+.toggle-ai-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(69, 123, 157, 0.3);
+}
+
+.btn-filled {
+    background: var(--imperial-red);
+    padding: 0.75rem 1.75rem;
+    border-radius: 2rem;
+    transition: var(--transition);
+}
+
+.btn-filled:hover {
+    background: var(--honeydew);
+    color: var(--space-cadet);
+    transform: scale(1.05);
+}
+
+/* Footer Styles */
+.main-footer {
+    background: var(--space-cadet);
+    color: var(--honeydew);
+    padding: 4rem 2rem;
+    margin-top: auto;
+    background-color: #2B2D42;
+}
+
+.footer-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--powder-blue);
+    margin-bottom: 1.5rem;
+}
+
+.footer-nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav a {
+    color: var(--honeydew);
+    text-decoration: none;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.footer-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--imperial-red);
+    transition: var(--transition);
+}
+
+.footer-nav a:hover::after {
+    width: 100%;
+}
+
+.copyright {
+    display: block;
+    margin-top: 2rem;
+    color: var(--powder-blue);
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1.5rem;
+    }
+    
+    .brand-link {
+        font-size: 1.25rem;
+    }
+    
+    .footer-nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

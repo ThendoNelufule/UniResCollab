@@ -7,7 +7,7 @@
             <% if (typeof error !== 'undefined') { %>
                 <p style="color: red;"><%= error %></p>
             <% } %>
-            <form action="/username" method="POST">
+            <form action="/username" method="POST" id="inputbtn">
                 <label for="username">Username
                     <input type="text" name="username" id="username" required>
                 </label>
@@ -17,4 +17,5 @@
     </main>
 </body>
 
+<script src="../Scripts/reseacher.js"></script>
 <%- include('partials/footer') %>

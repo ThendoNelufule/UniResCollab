@@ -33,6 +33,7 @@ router.get('/AI-Page',function(req,res){
   res.render('AI-Page');
 });
 
+
 // Here I am setting a user's role in the database after he select the role
 router.get('/set-role', async (req, res) => {
     if (!req.isAuthenticated()) {

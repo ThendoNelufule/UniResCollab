@@ -6,12 +6,14 @@ const authRoutes = require('./Routes/authRoutes');
 const userRoute = require('./Routes/userRoutes');
 const expressLayouts = require('express-ejs-layouts');
 const projectRouter = require('./Routes/projectRouter.js');
+const methodOverride = require('method-override');
+require('dotenv').config({ path: path.join(__dirname,'..', '.env') });
+// Enable method override for form methods like DELETE and PUT
 
 const { DB } = require('./config/database');
 
 const app = express();
 const PORT = 4000;
-
 
 //This Middleware is for rendering the ejs
 app.use(expressLayouts);
@@ -24,10 +26,11 @@ app.use(express.json());
 
 // Here i initialise sessions 
 app.use(express.urlencoded({ extended: true }));
-app.use(session({secret: "secret",resave: false,saveUninitialized: true}));
+app.use(session({secret:process.env.SESSION_SECRET,resave: false,saveUninitialized: true}));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride('_method'));
 
 app.use('/auth',authRoutes);
 app.use('/', authRoutes);

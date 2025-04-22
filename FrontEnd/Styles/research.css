@@ -1,0 +1,182 @@
+/* Quantum Research Portal Styles */
+:root {
+    --starfield: #0a0f1f;
+    --nebula: #1a1f2f;
+    --quantum-blue: #00f3ff;
+    --plasma: #ff0076;
+    --stardust: rgba(255,255,255,0.1);
+    --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.researchbody{
+    background-color: #1a1f3f;
+}
+
+.research-portal {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--starfield);
+    color: white;
+    min-height: 100vh;
+}
+
+/* Header */
+.portal-header {
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    background: linear-gradient(45deg, var(--nebula), #000716);
+    position: relative;
+    overflow: hidden;
+}
+
+.portal-title {
+    font-size: 4rem;
+    background: linear-gradient(45deg, var(--quantum-blue), var(--plasma));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(0,243,255,0.3);
+}
+
+.username-glow {
+    color: var(--quantum-blue);
+    text-shadow: 0 0 20px rgba(0,243,255,0.4);
+}
+
+/* Auto-Slideshow */
+.auto-slideshow {
+    max-width: 1400px;
+    margin: 2rem auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    height: 70vh;
+    perspective: 1000px;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all var(--transition);
+    filter: brightness(0.8);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    filter: brightness(1);
+    z-index: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    background: rgba(10,15,31,0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--stardust);
+    max-width: 600px;
+}
+
+/* Action Grid */
+.research-actions {
+    display: grid;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.action-cards {
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid var(--stardust);
+    transition: transform var(--transition);
+    position: relative;
+    overflow: hidden;
+    background-color: #000716;
+}
+
+
+.action-cards:hover {
+    transform: translateY(-10px);
+}
+
+.neu-button {
+    background: linear-gradient(45deg, var(--quantum-blue), var(--plasma));
+    color: black;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.neu-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0,243,255,0.3);
+}
+
+/* Collaboration Suite */
+.collab-suite {
+    color: #8ab5b8;
+    max-width: 1400px;
+    margin: 8rem auto;
+    padding: 0 2rem;
+}
+
+.suite-grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-top: 4rem;
+}
+
+.tool-card {
+    background: var(--nebula);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid var(--stardust);
+    transition: var(--transition);
+}
+
+.tool-card:hover {
+    background: #1a1f3f;
+    transform: translateY(-5px);
+}
+
+/* Animations */
+@keyframes slideWave {
+    0% { transform: translateX(0%); }
+    50% { transform: translateX(5%); }
+    100% { transform: translateX(0%); }
+}
+
+@media (max-width: 768px) {
+    .portal-title {
+        font-size: 2.5rem;
+    }
+    
+    .auto-slideshow {
+        height: 50vh;
+    }
+    
+    .research-actions {
+        grid-template-columns: 1fr;
+    }
+}

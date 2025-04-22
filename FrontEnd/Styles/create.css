@@ -1,0 +1,384 @@
+/* Base Variables */
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --error: #e74c3c;
+    --gray-light: #bdc3c7;
+    --gray-dark: #7f8c8d;
+    --font-main: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.2s ease;
+}
+
+.bodycreate{
+    background-image: url("create.avif");
+}
+
+/* Base Reset */
+.research-wizard * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.research-wizard {
+    font-family: var(--font-main);
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: #12161a;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Typography */
+.accent-gradient {
+    background: linear-gradient(135deg, var(--secondary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.creation-step {
+    color: var(--gray-dark);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-icon {
+    width: 1.5em;
+    height: 1.5em;
+    fill: currentColor;
+}
+
+small {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gray-dark);
+    margin-top: 0.25rem;
+    line-height: 1.4;
+}
+
+/* Progress Indicator */
+.creation-progress {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.creation-progress::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--gray-light);
+    z-index: 1;
+}
+
+.creation-progress li {
+    position: relative;
+    padding-bottom: 1.5rem;
+    color: var(--gray-dark);
+    font-weight: 500;
+}
+
+.creation-progress li::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--gray-light);
+    z-index: 2;
+    border-radius: 2px;
+}
+
+.creation-progress .current {
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.creation-progress .current::after {
+    background-color: var(--secondary);
+}
+
+/* Flash Messages */
+.flash-message {
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+
+.flash-message.success {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--success);
+    border-left: 4px solid var(--success);
+}
+
+.flash-message svg {
+    width: 1.5em;
+    height: 1.5em;
+    flex-shrink: 0;
+}
+
+/* Form Structure */
+.research-architect {
+    display: grid;
+    gap: 2.5rem;
+    background-color: #7f8c8d;
+}
+
+.form-panel {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.form-panel:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.form-group {
+    border: none;
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.form-group > legend {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    padding: 0;
+}
+
+/* Input Fields */
+label {
+    display: block;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+input:not([type="checkbox"], [type="radio"]),
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    border: 1px solid var(--gray-light);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Date Grid */
+.date-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Checkbox/Radio Groups */
+.methodology-tags,
+.visibility-options {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.methodology-tags li,
+.visibility-options li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.visibility-options li label {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-light);
+    flex: 1;
+    margin: 0;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.visibility-options li label:hover {
+    border-color: var(--secondary);
+}
+
+.visibility-options li label strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.visibility-options li label span {
+    font-weight: normal;
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 0.25em;
+    accent-color: var(--secondary);
+}
+
+/* Action Buttons */
+.action-nexus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+button,
+.navigation-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button svg,
+.navigation-link svg {
+    width: 1.25em;
+    height: 1.25em;
+}
+
+.launch-button {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+}
+
+.launch-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.secondary-button {
+    background-color: white;
+    color: var(--dark);
+    border: 1px solid var(--gray-light);
+}
+
+.secondary-button:hover {
+    border-color: var(--gray-dark);
+    background-color: #f8f9fa;
+}
+
+.navigation-link {
+    background-color: transparent;
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+
+.navigation-link:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .accent-gradient {
+        font-size: 2rem;
+    }
+    
+    .methodology-tags,
+    .visibility-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .date-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Validation States */
+input:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: var(--error);
+}
+
+input:invalid:focus,
+select:invalid:focus,
+textarea:invalid:focus {
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+/* Required Field Indicators */
+label:has(input:required, select:required, textarea:required)::after,
+legend:has(~ :required)::after {
+    content: ' *';
+    color: var(--error);
+}

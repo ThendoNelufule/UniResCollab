@@ -1,35 +1,61 @@
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }, // Fix here
+
+  // Core Setup
+  title: { type: String, required: true, minlength: 10 },
+  domain: { 
+    type: String, 
+    required: true, 
+    enum: [
+      'Information Technology', 
+      'Geology', 
+      'Actuary', 
+      'Medicine', 
+      'Pharmacy', 
+      'Dental', 
+      'Radiology', 
+      'Mining', 
+      'Chemical',
+      'Electrical',
+      'Mechanical',
+      'Civil'
+    ]
   },
-  description: {
-    type: String,
-    required: true
+  abstract: { type: String, required: true, minlength: 10, maxlength: 2000 },
+
+  // Timeline
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+
+  // Methodology
+  methodology: [{ type: String, enum: [
+    'experimental',
+    'computational',
+    'fieldwork',
+    'clinical',
+    'archival',
+    'survey'
+  ]}],
+
+  // Collaboration
+  pi: { type: String, required: true },
+  institution: { type: String, required: true },
+
+  // Visibility options
+  visibility: { 
+    type: String, 
+    required: true, 
+    enum: ['private', 'institutional', 'public', 'embargoed'] 
   },
-  requirements: {
-    type: [String], 
-    required: true
-  },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Here I am referencing to the Researcher who created the project
-    required: true
-  },
-  collaborators: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Here I am listing all collaborators who are invited to work on the project
-  }],
-  isPublic: {
-    type: Boolean,
-    default: true // This is to indicate whether the project public or private
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+
+  // Optional fields
+  ethics: { type: String },
+  dataPolicy: { type: String },
+  collaborators: [{ type: String }],
+
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('projects', projectSchema);
