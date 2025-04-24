@@ -13,7 +13,7 @@ require('dotenv').config({ path: path.join(__dirname,'..', '.env') });
 const { DB } = require('./config/database');
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 8080
 
 //This Middleware is for rendering the ejs
 app.use(expressLayouts);
