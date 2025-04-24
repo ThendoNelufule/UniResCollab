@@ -1,0 +1,327 @@
+/* Base Variables */
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --error: #e74c3c;
+    --gray-light: #bdc3c7;
+    --gray-dark: #7f8c8d;
+    --font-main: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition: all 0.2s ease;
+}
+
+/* Base Reset */
+.project-details-container * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.project-details-container {
+    font-family: var(--font-main);
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: #f9fbfd;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Project Article */
+.project-article {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+/* Project Header */
+.project-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--gray-light);
+    background-color: #f9fbfd;
+}
+
+.project-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.project-domain {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+}
+
+.project-domain.genomics {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.project-domain.climate {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.project-domain.ai-ethics {
+    background-color: rgba(155, 89, 182, 0.1);
+    color: #9b59b6;
+}
+
+.visibility-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+}
+
+.visibility-badge svg {
+    width: 0.9em;
+    height: 0.9em;
+}
+
+.visibility-badge.public {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.visibility-badge.private {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.project-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.project-timeline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+.project-timeline svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+.timeline-separator {
+    color: var(--gray-light);
+}
+
+/* Content Sections */
+.project-content,
+.project-requirements,
+.project-collaboration {
+    padding: 2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-title svg {
+    width: 1.25em;
+    height: 1.25em;
+    fill: currentColor;
+}
+
+.description-content {
+    line-height: 1.8;
+    color: var(--dark);
+}
+
+.description-content p {
+    margin-bottom: 1rem;
+}
+
+.description-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Requirements List */
+.requirements-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.75rem;
+}
+
+.requirement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #f9fbfd;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.requirement-item svg {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    fill: var(--success);
+    margin-top: 0.15em;
+}
+
+/* Collaboration Section */
+.collaboration-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+}
+
+.action-button svg {
+    width: 1.25em;
+    height: 1.25em;
+}
+
+.action-button.primary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.action-button.primary:hover {
+    background-color: #2980b9;
+}
+
+.action-button.secondary {
+    background-color: white;
+    color: var(--dark);
+    border: 1px solid var(--gray-light);
+}
+
+.action-button.secondary:hover {
+    border-color: var(--gray-dark);
+}
+
+.action-button.secondary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.action-button.danger {
+    background-color: white;
+    color: var(--error);
+    border: 1px solid var(--error);
+}
+
+.action-button.danger:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Project Footer */
+.project-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--gray-light);
+    background-color: #f9fbfd;
+}
+
+.project-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.navigation-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navigation-link svg {
+    width: 1.25em;
+    height: 1.25em;
+    fill: currentColor;
+}
+
+.navigation-link:hover {
+    text-decoration: underline;
+}
+
+.action-group {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .project-header,
+    .project-content,
+    .project-requirements,
+    .project-collaboration {
+        padding: 1.5rem;
+    }
+    
+    .project-title {
+        font-size: 1.5rem;
+    }
+    
+    .requirements-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-navigation {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .action-group {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .action-button {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -7,10 +7,6 @@
     "start": "node BackEnd/server.js",
     "test": "node BackEnd/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MualusiLilimu/UniResCollab.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,16 +16,15 @@
   "homepage": "https://github.com/MualusiLilimu/UniResCollab#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "bcryptjs": "^3.0.2",
-    "connect-flash": "^0.1.1",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-ejs-layouts": "^2.5.1",
+    "express-flash": "^0.0.2",
     "express-session": "^1.18.1",
+    "method-override": "^3.0.0",
     "mongoose": "^8.13.2",
     "passport": "^0.7.0",
-    "passport-azure-ad": "^4.3.5",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0"
   }

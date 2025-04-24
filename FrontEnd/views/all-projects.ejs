@@ -1,0 +1,25 @@
+<%- include('partials/appheader') %>
+
+<section class="container py-4">
+  <h2 class="text-center mb-4">All Projects</h2>
+
+  <% if (projects && projects.length > 0) { %>
+    <section class="row g-3">
+      <% projects.forEach(project => { %>
+        <section class="col-md-6">
+          <section class="card p-3 shadow-sm h-100">
+            <h5><%= project.title %></h5>
+            <p class="text-muted mb-2"><%= project.description || 'No description available.' %></p>
+            <a href="/researcher/projects/project-details/<%= project._id %>" class="btn btn-sm btn-outline-primary mt-auto">
+              Project Details
+            </a>
+          </section>
+        </section>
+      <% }) %>
+    </section>
+  <% } else { %>
+    <p class="text-center text-muted">No projects found.</p>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

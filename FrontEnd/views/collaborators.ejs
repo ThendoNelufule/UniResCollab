@@ -1,0 +1,50 @@
+<%- include('partials/appheader') %>
+
+<section class="container py-4">
+  <h2 class="text-center mb-4">Project Collaborators</h2>
+
+  <section class="card p-4 shadow-sm">
+    <% if (collaborators && collaborators.length > 0) { %>
+      <ul class="list-group" id="collaboratorList">
+        <% collaborators.forEach(username => { %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong><%= username %></strong>
+            <% if (user && user.role !== 'Reviewer' && !project.collaborators.includes(user.username)) { %> 
+              <button class="btn btn-sm btn-danger" onclick="removeCollaborator('<%= username %>')">Remove</button>
+            <% } %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="text-muted text-center">No collaborators added yet.</p>
+    <% } %>
+  </section>
+</section>
+
+<%- include('partials/footer') %>
+
+<script>
+  async function removeCollaborator(username) {
+    if (!confirm(`Are you sure you want to remove ${username} from this project?`)) return;
+
+    const projectId = "<%= project._id %>";
+
+    try {
+      const response = await fetch('/researcher/projects/removeCollaborator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, projectId })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        location.reload(); // refresh to show updated list
+      } else {
+        alert(data.message || 'Failed to remove collaborator.');
+      }
+    } catch (error) {
+      console.error('Error removing collaborator:', error);
+    }
+  }
+</script>

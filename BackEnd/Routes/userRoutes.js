@@ -93,6 +93,3 @@ router.get('/set-role', async (req, res) => {
 
 
 module.exports = router;
-
-
-

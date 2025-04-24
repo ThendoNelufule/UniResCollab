@@ -1,13 +1,13 @@
-<%- include('partials/header') %>
+<%- include('partials/appheader') %>
 <body id="ai_body">
     <main class="ai-container">
         <h1>UniResCollab AI Chat</h1>
         <section id="chat">
-            <div id="chatBox"></div>
-            <div class="input-area">
+            <section id="chatBox"></section>
+            <section class="input-area">
                 <input type="text" id="userInput" placeholder="Ask me anything..." />
                 <button onclick="sendMessage()">Send</button>
-            </div>
+            </section>
         </section>
     </main>
     <script src="../Scripts/ai.js"></script>

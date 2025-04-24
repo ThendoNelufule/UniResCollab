@@ -1,0 +1,171 @@
+<%- include('partials/appheader') %>
+
+<body class="bodymyprojects">
+  <main class="research-portfolio">
+    <header class="portfolio-header">
+      <h1 class="accent-gradient">Research Portfolio</h1>
+      <p class="portfolio-subtitle">Active Research Initiatives</p>
+      <nav aria-label="Project actions">
+        <a href="/researcher/projects/create" class="new-project-button">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+          Launch New Initiative
+        </a>
+      </nav>
+    </header>
+
+    <% if (projects.length === 0) { %>
+      <section class="empty-state" aria-labelledby="empty-state-heading">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+        </svg>
+        <h2 id="empty-state-heading">No Active Research Initiatives</h2>
+        <p class="p">Begin by launching your first research project to organize your work and collaborate with peers.</p>
+        <a href="/researcher/projects/create" class="cta-button">
+          Start Your First Project
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+          </svg>
+        </a>
+      </section>
+    <% } else { %>
+      <section class="project-listing" aria-labelledby="projects-heading">
+        <h2 id="projects-heading" class="visually-hidden">Your Research Projects</h2>
+
+        <section class="statistics-banner">
+          <h3 class="visually-hidden">Project Statistics</h3>
+          <ul class="stats-grid">
+            <li class="stat-card">
+              <strong class="stat-value"><%= projects.length %></strong>
+              <strong class="stat-label">Active Projects</strong>
+            </li>
+            <li class="stat-card">
+              <strong class="stat-value"><%= projects.reduce((acc, proj) => acc + proj.collaborators.length, 0) %></strong>
+              <strong class="stat-label">Total Collaborators</strong>
+            </li>
+            <li class="stat-card">
+              <strong class="stat-value">
+                <%= Math.round(projects.filter(p => new Date(p.endDate) > new Date()).length / projects.length * 100) + '%' %>
+              </strong>
+              <strong class="stat-label">On Track</strong>
+            </li>
+          </ul>
+        </section>
+
+        <section class="filter-controls">
+          <h3 class="visually-hidden">Project Filters</h3>
+          <form class="filter-form" aria-label="Filter projects">
+            <fieldset class="filter-group">
+              <legend>Filter by Status</legend>
+              <ul class="filter-options">
+                <li>
+                  <input type="radio" id="filter-all" name="status" value="all" checked>
+                  <label for="filter-all">All Projects</label>
+                </li>
+                <li>
+                  <input type="radio" id="filter-active" name="status" value="active">
+                  <label for="filter-active">Active</label>
+                </li>
+                <li>
+                  <input type="radio" id="filter-completed" name="status" value="completed">
+                  <label for="filter-completed">Completed</label>
+                </li>
+              </ul>
+            </fieldset>
+
+            <label for="domain-filter">
+              Discipline
+              <select id="domain-filter" name="domain">
+                <option value="">All Disciplines</option>
+                <option value="Information Technology">IT/Computer Science</option>
+                <option value="Geology">Geology</option>
+                <option value="Actuary">Actuarial Science</option>
+                <option value="Medicine">Medical Science</option>
+                <option value="Pharmacy">Pharmatical Science</option>
+                <option value="Dental">Dental Science</option>
+                <option value="Radiology">Radiological Science</option>
+                <option value="Mining">Mining Engineering</option>
+                <option value="Chemical">Chemical Engineering</option>
+                <option value="Electrical">Electrical Engineering</option>
+                <option value="Mechanical">Mechanical Engineering</option>
+                <option value="Civil">Civil Engineering</option>
+                
+              </select>
+            </label>
+          </form>
+        </section>
+
+        <ul class="project-grid">
+          <% projects.forEach(project => { %>
+            <li class="project-card">
+              <article aria-labelledby="project-<%= project._id %>-title">
+                <header class="project-header">
+                  <h3 id="project-<%= project._id %>-title"><%= project.title %></h3>
+                  <strong class="domain-tag <%= project.domain %>" aria-label="<%= project.domain %> discipline"><%= project.domain %></strong>
+                </header>
+
+                <dl class="project-meta">
+                  <section class="meta-item">
+                    <dt class="visually-hidden">Timeline</dt>
+                    <dd>
+                      <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                      </svg>
+                      <%= new Date(project.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) %> - 
+                      <%= new Date(project.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) %>
+                      <% if (new Date(project.endDate) < new Date()) { %>
+                        <strong class="status-badge completed">Completed</strong>
+                      <% } else if (new Date(project.endDate) < new Date(Date.now() + 30*24*60*60*1000)) { %>
+                        <strong class="status-badge ending-soon">Ending Soon</strong>
+                      <% } %>
+                    </dd>
+                  </section>
+                  <section class="meta-item">
+                    <dt class="visually-hidden">Collaborators</dt>
+                    <dd>
+                      <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                      </svg>
+                      <%= project.collaborators.length %> <%= project.collaborators.length === 1 ? 'Collaborator' : 'Collaborators' %>
+                    </dd>
+                  </section>
+                </dl>
+
+                <section class="project-summary">
+                  <h4 class="visually-hidden">Project Summary</h4>
+                  <p><%= (project.abstract || '').substring(0, 150) %>...</p>
+                </section>
+
+                <footer class="project-actions">
+                  <nav aria-label="Project actions">
+                    <ul class="action-list">
+                      <li>
+                        <a href="/researcher/projects/project-details/<%= project._id %>" class="action-button">
+                          View Details
+                          <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/researcher/projects/project-details/<%= project._id %>/invite-collaborators" class="secondary-button">
+                          <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
+                          </svg>
+                          Collaborate
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </footer>
+              </article>
+            </li>
+          <% }); %>
+        </ul>
+      </section>
+    <% } %>
+  </main>
+</body>
+
+<%- include('partials/footer') %>

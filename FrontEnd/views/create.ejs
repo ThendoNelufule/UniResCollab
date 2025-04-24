@@ -1,0 +1,239 @@
+<%- include('partials/appheader') %>
+<body class="bodycreate">
+
+    <main class="research-wizard">
+        <% if (messages.success) { %>
+            <section class="flash-message success" role="alert">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <p><%= messages.success %></p>
+            </section>
+        <% } %>
+        
+        <header class="creation-header">
+            <h1 class="accent-gradient">Launch New Research Project</h1>
+            <h3 class="creation-step">Project Setup</h3>
+            <ol class="creation-progress" aria-label="Project creation progress">
+                <li class="current" aria-current="step">Core Setup</li>
+            </ol>
+        </header>
+    
+        <form class="research-architect" action="/researcher/projects/create" method="POST" novalidate>
+            <!-- Research Blueprint -->
+            <section class="form-panel" aria-labelledby="blueprint-heading">
+                <h2 id="blueprint-heading">
+                    <svg aria-hidden="true" class="section-icon" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    Research Blueprint
+                </h2>
+                
+                <fieldset class="form-group">
+                    <legend>Project Identification</legend>
+                    
+                    <label for="title">
+                        Project Title*
+                        <input type="text" id="title" name="title" required
+                               placeholder="Genomic Analysis of Coastal Ecosystems"
+                               minlength="10"
+                               aria-describedby="titleHelp">
+                        <small id="titleHelp">Minimum 10 characters, be specific (e.g., "CRISPR-based interventions for coral reef resilience")</small>
+                    </label>
+                    
+                </fieldset>
+    
+                <fieldset class="form-group">
+                    <legend>Academic Classification</legend>
+                    
+                    <label for="domain">
+                        Primary Discipline*
+                        <select id="domain" name="domain" required>
+                            <option value="">Select research category...</option>
+                            <optgroup label="Science Faculty">
+                                <option value="Information Technology">IT/Computer Science</option>
+                                <option value="Geology">Geological Science</option>
+                                <option value="Actuary">Actuarial science</option>
+                            </optgroup>
+                            <optgroup label="Health Faculty">
+                                <option value="Medicine">Medical Science</option>
+                                <option value="Pharmacy">Pharmatical Science</option>
+                                <option value="Dental"> Dental Science</option>
+                                <option value="Radiology"> Radiological Science</option>
+                            </optgroup>
+                            <optgroup label="Engineering Faculty">
+                                <option value="Mining">Mining Engineering</option>
+                                <option value="Chemical">Chemical Engineering</option>
+                                <option value="Electrical">Electrical Engineering</option>
+                                <option value="Mechanical">Mechanical Engineering</option>
+                                <option value="Civil">Civil Engineering</option>
+                            </optgroup>
+                        </select>
+                    </label>
+
+                </fieldset>
+    
+                <fieldset class="form-group">
+                    <legend>Intellectual Context</legend>
+                    
+                    <label for="abstract">
+                        Research Abstract*
+                        <textarea id="abstract" name="abstract" rows="6" required
+                                  placeholder="Describe your research objectives, methodology, and expected impact..."
+                                  minlength="10" maxlength="2000" 
+                                  aria-describedby="abstractHelp"></textarea>
+                        <small id="abstractHelp">Structured abstract (250-2000 words). Include: Background, Objectives, Methods, Expected Outcomes</small>
+                    </label>
+
+                </fieldset>
+            </section>
+    
+            <!-- Temporal Framework -->
+            <section class="form-panel" aria-labelledby="temporal-heading">
+                <h2 id="temporal-heading">
+                    <svg aria-hidden="true" class="section-icon" viewBox="0 0 24 24">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 6v6l4 2"/>
+                    </svg>
+                    Temporal Framework
+                </h2>
+    
+                <fieldset class="form-group">
+                    <legend>Project Timeline</legend>
+                    
+                    <section class="date-grid">
+                        <label for="startDate">
+                            Initiation Date*
+                            <input type="date" id="startDate" name="startDate" required 
+                                   min="<%= new Date().toISOString().split('T')[0] %>" 
+                                   max="2027-12-31">
+                        </label>
+                        
+                        <label for="endDate">
+                            Projected Completion*
+                            <input type="date" id="endDate" name="endDate" required
+                                   min="<%= new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().split('T')[0] %>"
+                                   max="2030-12-31">
+                        </label>
+                    </section>
+
+                </fieldset>
+    
+                <fieldset class="form-group">
+                    <legend>Methodological Approaches*</legend>
+                    
+                    <ul class="methodology-tags" role="group" aria-labelledby="methodology-label">
+                        <li>
+                            <input type="checkbox" id="experimental" name="methodology" value="experimental">
+                            <label for="experimental">Experimental Research</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="computational" name="methodology" value="computational">
+                            <label for="computational">Computational Modeling</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="fieldwork" name="methodology" value="fieldwork">
+                            <label for="fieldwork">Fieldwork & Observation</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="clinical" name="methodology" value="clinical">
+                            <label for="clinical">Clinical Trials</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="archival" name="methodology" value="archival">
+                            <label for="archival">Archival Research</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="survey" name="methodology" value="survey">
+                            <label for="survey">Survey Methodology</label>
+                        </li>
+                    </ul>
+                    <small>Select at least one primary methodology</small>
+                </fieldset>
+            </section>
+    
+            <!-- Collaborative Nexus -->
+            <section class="form-panel" aria-labelledby="collaboration-heading">
+                <h2 id="collaboration-heading">
+                    <svg aria-hidden="true" class="section-icon" viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
+                    </svg>
+                    Collaborative Nexus
+                </h2>
+    
+                <fieldset class="form-group">
+                    <legend>Team Composition</legend>
+                    
+                    <label for="pi">
+                        Principal Investigator*
+                        <input type="text" id="pi" name="pi" required
+                               placeholder="Dr. Jane Researcher"
+                               aria-describedby="piHelp">
+                        <small id="piHelp">Full name with title</small>
+                    </label>
+    
+                    <label for="institution">
+                        Lead Institution*
+                        <input type="text" id="institution" name="institution" required
+                               placeholder="University of Science"
+                               aria-describedby="institutionHelp">
+                        <small id="institutionHelp">Primary academic affiliation</small>
+                    </label>
+                </fieldset>
+    
+                <fieldset class="form-group">
+                    <legend>Project Visibility*</legend>
+                    
+                    <ul class="visibility-options" role="radiogroup" aria-labelledby="visibility-label">
+                        <li>
+                            <input type="radio" id="private" name="visibility" value="private">
+                            <label for="private">
+                                <strong>Private Cohort</strong>
+                                <strong>Invite-only access</strong>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" id="institutional" name="visibility" value="institutional">
+                            <label for="institutional">
+                                <strong>Institutional Network</strong>
+                                <strong>Department-wide visibility</strong>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" id="public" name="visibility" value="public">
+                            <label for="public">
+                                <strong>Public Domain</strong>
+                                <strong>Open discovery & collaboration</strong>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" id="embargoed" name="visibility" value="embargoed">
+                            <label for="embargoed">
+                                <strong>Embargoed Release</strong>
+                                <strong>Public after specified period</strong>
+                            </label>
+                        </li>
+                    </ul>
+                </fieldset>
+            </section>
+    
+    
+            <!-- Action Nexus -->
+            <nav class="action-nexus" aria-label="Form actions">
+                <button type="submit" class="launch-button">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M13 2v10h7V8l-6-6zM4 22h16v-2H4V2H2v20h2z"/></svg>
+                    Launch Research Matrix
+                </button>
+                <button type="reset" class="secondary-button">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                    Reset Form
+                </button>
+                <a href="/researcher/Home" class="navigation-link">
+                    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
+                    Return to Dashboard
+                </a>
+            </nav>
+        </form>
+    </main>
+
+</body>
+
+
+<%- include('partials/footer') %>

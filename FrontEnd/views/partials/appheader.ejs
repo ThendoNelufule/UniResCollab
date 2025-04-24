@@ -1,0 +1,59 @@
+<!-- header.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UniResCollab</title>
+  <link rel="stylesheet" href="/styles/style.css"> <!-- Use the correct path here -->
+  <link rel="stylesheet" href="/styles/about.css">
+  <link rel="stylesheet" href="/styles/ai.css">
+  <link rel="stylesheet" href="/styles/username.css">
+  <link rel="stylesheet" href="/styles/research.css">
+  <link rel="stylesheet" href="/styles/create.css">
+  <link rel="stylesheet" href="/styles/my-projects.css">
+  <link rel="stylesheet" href="/styles/header.css">
+  <link rel="stylesheet" href="/styles/admin.css">
+  <link rel="stylesheet" href="/styles/reviewerHome.css">
+  <link rel="stylesheet" href="/styles/project-details.css">
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.1.0/dist/web-llm.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+ <!-- Add this inside <head> -->
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<svg class="svg-defs">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"/>
+      <stop offset="100%"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+</head>
+<!-- Top Header with Navigation -->
+<header class="site-header">
+  <nav class="navbar">
+    <a href="/" class="brand-link">
+      <!-- Emblem: Book + Collaboration Node Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="#ffffff">
+        <path d="M3 4.5V20c0 .55.45 1 1 1h13v-1H4V4.5h13v-1H4c-.55 0-1 .45-1 1zm17-1h-6v17h6c.55 0 1-.45 1-1V4.5c0-.55-.45-1-1-1zm-2.5 11.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+      </svg>
+      UniResCollab
+    </a>
+
+    <nav class="nav-links">
+      <a href="/AI-Page" class="toggle-ai-btn">
+        🤖 Chat with UniResCollab AI
+    </a>
+      <a href="/logout" class="btn-filled">Log Out</a>
+      <a href="/about">About</a>
+    </nav>
+  </nav>
+</header>

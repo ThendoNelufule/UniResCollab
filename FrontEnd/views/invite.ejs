@@ -1,0 +1,126 @@
+<%- include('partials/appheader') %>
+
+<section class="container py-4">
+  <h2 class="text-center mb-4">Invite Collaborators</h2>
+
+  <section class="card p-4 shadow-sm">
+    <!-- Search bar -->
+    <form id="searchForm" class="d-flex mb-3">
+      <input type="text" id="searchInput" name="username" class="form-control me-2" placeholder="Search by username..." required>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <!-- Search results -->
+    <section id="searchResults" class="list-group mb-4">
+      <!-- JavaScript will insert matching users here -->
+    </section>
+
+    <!-- Already invited collaborators -->
+    <h5>Invited Collaborators</h5>
+    <ul id="invitedList" class="list-group">
+      <% invitedUsers.forEach(user => { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>
+            <%= user.username %>
+          </strong>
+          <strong class="badge bg-success">Invited</strong>
+        </li>
+      <% }) %>
+    </ul>
+  </section>
+</section>
+
+<%- include('partials/footer') %>
+
+<script>
+  document.getElementById('searchForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent form from submitting normally
+    
+    const username = document.getElementById('searchInput').value.trim();
+    
+    // If username is empty, exit
+    if (!username) {
+      return;
+    }
+
+    try {
+      // Send the request to the server to search for the username
+      const response = await fetch(`/researcher/projects/searchUser?username=${encodeURIComponent(username)}`);
+      
+      if (!response.ok) {
+        throw new Error('Error fetching user data');
+      }
+      
+      const data = await response.json();
+
+      // Display the results
+      const searchResultsContainer = document.getElementById('searchResults');
+      searchResultsContainer.innerHTML = ''; // Clear previous results
+      
+      if (data.length === 0) {
+        searchResultsContainer.innerHTML = '<li class="list-group-item">No users found</li>';
+      } else {
+        data.forEach(user => {
+          const listItem = document.createElement('li');
+          listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+          
+          const usernameSpan = document.createElement('span');
+          usernameSpan.textContent = user.username;
+          
+          const inviteButton = document.createElement('button');
+          inviteButton.classList.add('btn', 'btn-sm', 'btn-success');
+          inviteButton.textContent = 'Invite';
+          inviteButton.onclick = function() {
+            inviteUser(user.username);
+          };
+          
+          listItem.appendChild(usernameSpan);
+          listItem.appendChild(inviteButton);
+          searchResultsContainer.appendChild(listItem);
+        });
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+    }
+  });
+
+  async function inviteUser(username) {
+  const projectId = "<%= project._id %>"; // Use EJS to inject the current project ID
+
+  try {
+    const response = await fetch('/researcher/projects/addCollaborator', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, projectId })
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      alert(data.message || 'Error adding collaborator');
+      return;
+    }
+
+    // Update invited list in the UI
+    const invitedList = document.getElementById('invitedList');
+    const listItem = document.createElement('li');
+    listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+    const usernameSpan = document.createElement('span');
+    usernameSpan.textContent = username;
+
+    const badge = document.createElement('span');
+    badge.classList.add('badge', 'bg-success');
+    badge.textContent = 'Added';
+
+    listItem.appendChild(usernameSpan);
+    listItem.appendChild(badge);
+    invitedList.appendChild(listItem);
+  } catch (error) {
+    console.error('Add collaborator error:', error);
+  }
+}
+
+</script>

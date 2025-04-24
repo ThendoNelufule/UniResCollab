@@ -1,8 +1,67 @@
-<h1>This is the Reviewer's HomePage</h1>
+<%- include('partials/appheader') %>
 
-<p>Welcome, <%= user.username %>!</p>
-
-<form action="/logout" method="get">
-    <button type="submit">Logout</button>
-</form>
+<body id="reviewerbody">
+  <main class="reviewer-dashboard">
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">Research Reviewer Portal</h1>
+      <p class="welcome-message">Welcome, <strong><%= user.username %></strong>. As a reviewer, you have access to:</p>
+    </header>
   
+    <section class="capabilities" aria-labelledby="capabilities-heading">
+      <h2 id="capabilities-heading" class="visually-hidden">Reviewer Capabilities</h2>
+      
+      <article class="capability-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+        </svg>
+        <h3>Browse All Research</h3>
+        <p>Access current and completed research projects from university researchers</p>
+        <a href="/researcher/projects/all" class="action-link">View Research Projects</a>
+      </article>
+      
+      <article class="capability-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+        </svg>
+        <h3>Read Publications</h3>
+        <p>View finalized research papers and publications</p>
+        <a href="/publications" class="action-link">Access Publications</a>
+      </article>
+      
+      <article class="capability-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
+        </svg>
+        <h3>Provide Feedback</h3>
+        <p>Submit constructive feedback on research methodology and findings</p>
+        <a href="/feedback" class="action-link">Give Feedback</a>
+      </article>
+      
+      <article class="capability-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/>
+        </svg>
+        <h3>Track Review Progress</h3>
+        <p>Monitor projects you've reviewed and feedback you've provided</p>
+        <a href="/reviews" class="action-link">Your Reviews</a>
+      </article>
+    </section>
+  
+    <section class="recent-activity" aria-labelledby="activity-heading">
+      <h2 id="activity-heading">Recently Added Research</h2>
+      <ul class="research-list">
+      
+          <li>
+            <article>
+             
+            </article>
+          </li>
+  
+      </ul>
+      <a href="/researcher/projects/all" class="view-all">View all research projects →</a>
+    </section>
+  </main>
+</body>
+
+
+<%- include('partials/footer') %>
