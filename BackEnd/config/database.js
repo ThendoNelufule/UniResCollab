@@ -6,7 +6,7 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..','..', '.env') });
 const DB = () => {
     return new Promise((resolve, reject) => {
-      mongoose.connect(process.env.MONGO_URL)
+      mongoose.connect(process.env.MONGO_URI)
         .then(() => {
           console.log("Database connected");
           resolve();
