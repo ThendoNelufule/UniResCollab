@@ -20,10 +20,10 @@
     <ul id="invitedList" class="list-group">
       <% invitedUsers.forEach(user => { %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <span>
+          <strong>
             <%= user.username %>
-          </span>
-          <span class="badge bg-success">Invited</span>
+          </strong>
+          <strong class="badge bg-success">Invited</strong>
         </li>
       <% }) %>
     </ul>

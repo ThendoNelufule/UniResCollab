@@ -14,7 +14,7 @@
                       <button type="submit" class="neu-button">
                         <%= project.title %>
                         <% if (String(project.user) !== String(user._id)) { %>
-                          <span style="font-size: 0.8rem; color: lightgray;"> (Collaborator)</span>
+                          <strong style="font-size: 0.8rem; color: lightgray;"> (Collaborator)</strong>
                         <% } %>
                       </button>
                     </form>

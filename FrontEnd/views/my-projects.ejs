@@ -37,18 +37,18 @@
           <h3 class="visually-hidden">Project Statistics</h3>
           <ul class="stats-grid">
             <li class="stat-card">
-              <span class="stat-value"><%= projects.length %></span>
-              <span class="stat-label">Active Projects</span>
+              <strong class="stat-value"><%= projects.length %></strong>
+              <strong class="stat-label">Active Projects</strong>
             </li>
             <li class="stat-card">
-              <span class="stat-value"><%= projects.reduce((acc, proj) => acc + proj.collaborators.length, 0) %></span>
-              <span class="stat-label">Total Collaborators</span>
+              <strong class="stat-value"><%= projects.reduce((acc, proj) => acc + proj.collaborators.length, 0) %></strong>
+              <strong class="stat-label">Total Collaborators</strong>
             </li>
             <li class="stat-card">
-              <span class="stat-value">
+              <strong class="stat-value">
                 <%= Math.round(projects.filter(p => new Date(p.endDate) > new Date()).length / projects.length * 100) + '%' %>
-              </span>
-              <span class="stat-label">On Track</span>
+              </strong>
+              <strong class="stat-label">On Track</strong>
             </li>
           </ul>
         </section>
@@ -102,11 +102,11 @@
               <article aria-labelledby="project-<%= project._id %>-title">
                 <header class="project-header">
                   <h3 id="project-<%= project._id %>-title"><%= project.title %></h3>
-                  <span class="domain-tag <%= project.domain %>" aria-label="<%= project.domain %> discipline"><%= project.domain %></span>
+                  <strong class="domain-tag <%= project.domain %>" aria-label="<%= project.domain %> discipline"><%= project.domain %></strong>
                 </header>
 
                 <dl class="project-meta">
-                  <div class="meta-item">
+                  <section class="meta-item">
                     <dt class="visually-hidden">Timeline</dt>
                     <dd>
                       <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -115,13 +115,13 @@
                       <%= new Date(project.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) %> - 
                       <%= new Date(project.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) %>
                       <% if (new Date(project.endDate) < new Date()) { %>
-                        <span class="status-badge completed">Completed</span>
+                        <strong class="status-badge completed">Completed</strong>
                       <% } else if (new Date(project.endDate) < new Date(Date.now() + 30*24*60*60*1000)) { %>
-                        <span class="status-badge ending-soon">Ending Soon</span>
+                        <strong class="status-badge ending-soon">Ending Soon</strong>
                       <% } %>
                     </dd>
-                  </div>
-                  <div class="meta-item">
+                  </section>
+                  <section class="meta-item">
                     <dt class="visually-hidden">Collaborators</dt>
                     <dd>
                       <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -129,7 +129,7 @@
                       </svg>
                       <%= project.collaborators.length %> <%= project.collaborators.length === 1 ? 'Collaborator' : 'Collaborators' %>
                     </dd>
-                  </div>
+                  </section>
                 </dl>
 
                 <section class="project-summary">

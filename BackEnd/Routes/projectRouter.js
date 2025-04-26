@@ -12,16 +12,16 @@ router.use(flash());
 
 
 // Show form to create a project
-router.get('/create', ensureAuthenticated, ensureResearcher, (req, res) => {
+router.get('/create', ensureAuthenticated,(req, res) => {
   res.render('create'); // View: views/create.ejs
 });
 
 
 // Handle project form submission
-router.post('/create', ensureAuthenticated, ensureResearcher, projectController.createProject);
+router.post('/create', ensureAuthenticated, projectController.createProject);
 
 // Get all projects for logged-in researcher
-router.get('/my-projects', ensureAuthenticated, ensureResearcher, projectController.getMyProjects);
+router.get('/my-projects', ensureAuthenticated, projectController.getMyProjects);
 
 // View a single project's details by ID
 router.get('/project-details/:id', ensureAuthenticated, projectController.viewProjectDetails);
