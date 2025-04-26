@@ -13,7 +13,7 @@ require('dotenv').config({ path: path.join(__dirname, '..','..', '.env') });
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'https://unirescollab-a0bgfbhzcfg6angs.southafricanorth-01.azurewebsites.net/auth/github/callback'
+    callbackURL: 'http://localhost:4000/auth/github/callback'
   },
   async (accessToken, refreshToken, profile, done) => {
     const newUser = {
