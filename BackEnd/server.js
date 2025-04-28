@@ -58,52 +58,54 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// Socket.IO handling
+// --- Socket.IO logic ---
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  // When a user joins the chat, assign them to a room named after their user id
-  socket.on('join', async (data) => {
-    const { userId, friendId } = data; // Destructure to get both userId and friendId
+  socket.on('join', async ({ userId, friendId }) => {
+    // Only join the user's own room
     socket.join(userId);
-    console.log(`User ${userId} joined their room`);
+    console.log(`Socket ${socket.id} joined room ${userId}`);
 
-    // Fetch all previous messages between the two users (in case they reconnect)
-    const messages = await Message.find({
-        $or: [
-            { sender: userId, recipient: friendId },
-            { sender: friendId, recipient: userId }
-        ]
-    }).sort({ timestamp: 1 });
-
-    // Emit all previous messages to the user
-    socket.emit('chat history', messages);
-});
-
-
-  socket.on('chat message', async (data) => {
+    // Fetch and emit chat history between userId and friendId
     try {
-      const { from, to, text } = data;
-      const message = await Message.create({
-        sender: from,
+      const history = await Message.find({
+        $or: [
+          { sender: userId,   recipient: friendId },
+          { sender: friendId, recipient: userId   }
+        ]
+      })
+      .sort({ timestamp: 1 });
+
+      socket.emit('chat history', history);
+    } catch (err) {
+      console.error('Error fetching chat history:', err);
+    }
+  });
+
+  socket.on('chat message', async ({ from, to, text }) => {
+    try {
+      // Create & save the message
+      const message = new Message({
+        sender:    from,
         recipient: to,
         text,
         timestamp: new Date()
       });
-  
-      // Send the message ONLY to sender and recipient
-      io.to(from).to(to).emit('chat message', message);
-  
-      // Ensure message is saved in the database even if the user is offline
-      await message.save(); // Make sure this is a database save
+      await message.save();
+
+      // Send to the sender
+      socket.emit('chat message', message);
+      // Send to the recipient (all sockets in room “to” except the sender)
+      socket.to(to).emit('chat message', message);
+
     } catch (error) {
       console.error('Error saving message:', error);
     }
   });
-  
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    console.log('User disconnected:', socket.id);
   });
 });
 
