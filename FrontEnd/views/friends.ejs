@@ -1,0 +1,28 @@
+<%- include('partials/appheader') %>
+
+<main id = "friend-main">
+  <section>
+    <h1>UniResCollab Universe</h1>
+
+    <ul class="friend-list">
+      <% if (users && users.length > 0) { %>
+        <% users.forEach(user => { %>
+          <li class="friend-item">
+            <figure class="friend-avatar">
+              <figcaption><%= user.username.charAt(0).toUpperCase() %></figcaption>
+            </figure>
+            <span class="friend-name"><%= user.username %></span>
+            <a href="/tools/chat/<%= user._id %>" class="chat-link">Chat</a>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>No friends found.</li>
+      <% } %>
+    </ul>
+
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+
+

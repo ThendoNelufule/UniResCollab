@@ -1,0 +1,113 @@
+<%- include('partials/appheader') %>
+
+<main id="chat-main">
+  <div class="chat-header">
+    <h2>Chat with <%= friendName %></h2> <!-- Friend's name will be passed in the route -->
+  </div>
+
+  <div id="chat-container">
+    <div id="chat-history">
+      <% let lastSender = null; %>
+      <% for (let i = 0; i < messages.length; i++) {
+          const msg = messages[i];
+          const isSameGroup = (msg.sender.toString() === lastSender);
+          const groupClass = (msg.sender.toString() === currentUserId.toString()) ? 'outgoing' : 'incoming';
+      %>
+        <% if (!isSameGroup) { %>
+          <div class="message-group <%= groupClass %>">
+        <% } %>
+            <div class="message">
+              <%= msg.text %>
+              <span class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></span>
+            </div>
+        <% if (!isSameGroup) { %>
+          </div>
+        <% } %>
+      <% lastSender = msg.sender.toString(); } %>
+    </div>
+
+    <form id="message-form">
+      <input id="message-input" autocomplete="off" placeholder="Type a message..." />
+      <button>Send</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const currentUserId = "<%= currentUserId %>";
+    const friendId = "<%= friendId %>";
+    let lastSender = null;
+
+    // Join the room based on user ID
+    // Join the room based on user ID and friend ID
+socket.emit('join', { userId: currentUserId, friendId: friendId });
+
+
+    document.getElementById('message-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('message-input');
+      const text = input.value.trim();
+      if (text) {
+        socket.emit('chat message', { from: currentUserId, to: friendId, text: text });
+        input.value = '';
+      }
+    });
+
+    socket.on('chat message', function(message) {
+      const sender = message.sender;
+      const groupClass = (sender === currentUserId) ? 'outgoing' : 'incoming';
+      const chatHistory = document.getElementById('chat-history');
+      let lastGroup = chatHistory.querySelector('.message-group:last-child');
+
+      if (lastSender === sender && lastGroup && lastGroup.classList.contains(groupClass)) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message';
+        msgDiv.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+        lastGroup.appendChild(msgDiv);
+      } else {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = `message-group ${groupClass}`;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message';
+        msgDiv.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+        groupDiv.appendChild(msgDiv);
+        chatHistory.appendChild(groupDiv);
+      }
+
+      lastSender = sender;
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    });
+
+    socket.on('chat history', function(messages) {
+    const chatHistory = document.getElementById('chat-history');
+    messages.forEach(function(message) {
+        const sender = message.sender;
+        const groupClass = (sender === currentUserId) ? 'outgoing' : 'incoming';
+        let lastGroup = chatHistory.querySelector('.message-group:last-child');
+
+        if (lastSender === sender && lastGroup && lastGroup.classList.contains(groupClass)) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message';
+            msgDiv.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+            lastGroup.appendChild(msgDiv);
+        } else {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = `message-group ${groupClass}`;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message';
+            msgDiv.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+            groupDiv.appendChild(msgDiv);
+            chatHistory.appendChild(groupDiv);
+        }
+
+        lastSender = sender;
+    });
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+});
+
+  </script>
+</main>
+
+
+<%- include('partials/footer') %>
