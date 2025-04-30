@@ -1,6 +1,60 @@
 <%- include('partials/appheader') %>
 
-<h1>Track Funding</h1>
+<main style="padding: 2rem; font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #203d5a, #2c5b89); min-height: 100vh;">
+  <section style="max-width: 800px; margin: auto; background: #fdfdfd; padding: 2.5rem; border-radius: 1.25rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);">
+    
+    <header style="text-align: center; margin-bottom: 2.5rem;">
+      <h1 style="font-size: 2.8rem; font-weight: bold; color: #2c3e50;">🎯 Track Your Funding</h1>
+      <p style="font-size: 1.2rem; color: #555;">Easily add, manage, and navigate your funding records.</p>
+    </header>
 
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <button id="addFundingBtn" style="padding: 0.8rem 1.5rem; font-size: 1rem; font-weight: bold; background-color: #662882; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
+        ➕ Add New Funding
+      </button>
+    </section>
+
+    <form id="fundingForm" style="display: none; margin-bottom: 2rem;" method="POST" action="/tools/funding">
+      <fieldset style="border: none; padding: 0; display: grid; gap: 1rem;">
+        <legend style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: #2c3e50;">Add New Funding</legend>
+
+        <label for="fundingTitle" style="font-weight: bold;">Funding Title:</label>
+        <input type="text" id="fundingTitle" name="fundingTitle" required style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+
+        <label for="fundingSource" style="font-weight: bold;">Funding Source:</label>
+        <input type="text" id="fundingSource" name="fundingSource" required style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+
+        <label for="totalAmount" style="font-weight: bold;">Total Amount (R):</label>
+        <input type="number" id="totalAmount" name="totalAmount" required style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+
+        <label for="startDate" style="font-weight: bold;">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+
+        <label for="endDate" style="font-weight: bold;">End Date:</label>
+        <input type="date" id="endDate" name="endDate" style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 0.5rem;">
+
+        <button type="submit" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background-color: #2980b9; color: white; font-weight: bold; border: none; border-radius: 0.5rem; cursor: pointer;">
+          📥 Submit Funding
+        </button>
+      </fieldset>
+    </form>
+
+    <nav style="margin-top: 3rem; text-align: center;">
+      <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+        <li><a href="/tools/funding/overview" style="text-decoration: none; font-weight: bold; color: #2c3e50; background-color: #ecf0f1; padding: 0.8rem 1.2rem; border-radius: 0.75rem;">📊 Funding Overview</a></li>
+        <li><a href="/tools/funding/requirements" style="text-decoration: none; font-weight: bold; color: #2c3e50; background-color: #ecf0f1; padding: 0.8rem 1.2rem; border-radius: 0.75rem;">📋 Funding Requirements</a></li>
+        <li><a href="/tools/funding/expenses" style="text-decoration: none; font-weight: bold; color: #2c3e50; background-color: #ecf0f1; padding: 0.8rem 1.2rem; border-radius: 0.75rem;">💸 Expense Tracker</a></li>
+      </ul>
+    </nav>
+
+  </section>
+</main>
+
+<script>
+  document.getElementById('addFundingBtn').addEventListener('click', () => {
+    const form = document.getElementById('fundingForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
 
 <%- include('partials/footer') %>
