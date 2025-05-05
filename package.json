@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "start": "node BackEnd/server.js",
+    "test": "node BackEnd/server.js"
   },
   "keywords": [],
   "author": "",
