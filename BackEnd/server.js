@@ -8,6 +8,7 @@ const expressLayouts = require('express-ejs-layouts');
 const projectRouter = require('./Routes/projectRouter.js');
 const toolsRouter = require('./Routes/toolsRouter.js');
 const methodOverride = require('method-override');
+const fileRoutes = require('./Routes/fileRouters');
 const { DB } = require('./config/database');
 const Message = require('./Models/Message'); // Import Message model
 require('dotenv').config({ path: path.join(__dirname,'..', '.env') });
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, '..','FrontEnd')));
 app.use(express.static(path.join(__dirname, '..','public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/files', fileRoutes);
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -64,47 +66,43 @@ io.on('connection', (socket) => {
   console.log('A user connected');
 
   socket.on('join', async ({ userId, friendId }) => {
-    // Only join the user's own room
-    socket.join(userId);
-    console.log(`Socket ${socket.id} joined room ${userId}`);
-
-    // Fetch and emit chat history between userId and friendId
+    const roomId = [userId, friendId].sort().join('-'); // Same as used in emit
+    socket.join(roomId); // <-- This is critical
+  
     try {
-      const history = await Message.find({
+      const messages = await Message.find({
         $or: [
-          { sender: userId,   recipient: friendId },
-          { sender: friendId, recipient: userId   }
+          { sender: userId, recipient: friendId },
+          { sender: friendId, recipient: userId }
         ]
-      })
-      .sort({ timestamp: 1 });
-
-      socket.emit('chat history', history);
+      }).sort({ timestamp: 1 });
+  
+      socket.emit('chat history', messages);
     } catch (err) {
-      console.error('Error fetching chat history:', err);
+      console.error("Failed to load messages:", err);
     }
   });
-
+  
+  
+  
   socket.on('chat message', async ({ from, to, text }) => {
+    const roomId = [from, to].sort().join('-');
     try {
-      // Create & save the message
       const message = new Message({
-        sender:    from,
+        sender: from,
         recipient: to,
         text,
         timestamp: new Date()
       });
       await message.save();
-
-      // Send to the sender
-      socket.emit('chat message', message);
-      // Send to the recipient (all sockets in room “to” except the sender)
-      socket.to(to).emit('chat message', message);
-
+  
+      io.to(roomId).emit('chat message', message); // Send to both users in the room
+  
     } catch (error) {
       console.error('Error saving message:', error);
     }
   });
-
+  
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
   });
@@ -123,3 +121,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+module.exports = app;

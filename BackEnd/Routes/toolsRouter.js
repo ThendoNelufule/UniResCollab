@@ -231,9 +231,6 @@ router.get('/funding/requirements', async (req, res) => {
       res.status(500).send('Failed to add requirement');
     }
   });
-  
-  
-
 
 
 
@@ -270,18 +267,23 @@ router.get('/funding/requirements', async (req, res) => {
 
  
 
-  router.get('/funding/expenses', async (req, res) => {
+  router.get('/funding/expenses', ensureAuthenticated, async (req, res) => {
     try {
-      
-      const latestFunding = await Funding.findOne().sort({ createdAt: -1 });
+      const userId = req.user._id;
   
-      const totalFunding = latestFunding ? latestFunding.totalAmount : 0;
+      const funding = await Funding.findOne({ createdBy: userId }).sort({ createdAt: -1 });
+      if (!funding) {
+        return res.render('ExpenseTracker', {
+          expenses: [],
+          remaining: 0,
+          error: 'No funding record found.'
+        });
+      }
   
-      const expenses = await Expense.find();
+      const expenses = await Expense.find({ createdBy: userId });
   
-      const totalSpent = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
-  
-      const remaining = totalFunding - totalSpent;
+      const totalSpent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+      const remaining = funding.totalAmount - totalSpent;
   
       res.render('ExpenseTracker', {
         expenses,
@@ -299,10 +301,13 @@ router.get('/funding/requirements', async (req, res) => {
   });
   
   
+  
   router.post('/funding/expenses', ensureAuthenticated, async (req, res) => {
     try {
       const { date, description, amount } = req.body;
-      const funding = await Funding.findOne({ createdBy: req.user._id }).sort({ createdAt: -1 });
+      const userId = req.user._id;
+  
+      const funding = await Funding.findOne({ createdBy: userId }).sort({ createdAt: -1 });
   
       if (!funding) {
         return res.render('ExpenseTracker', {
@@ -316,16 +321,11 @@ router.get('/funding/requirements', async (req, res) => {
         date,
         description,
         amount: parseFloat(amount),
-        createdBy: req.user._id,
+        createdBy: userId,
         fundingId: funding._id
       });
   
       await expense.save();
-  
-      
-      funding.amountSpent += parseFloat(amount);
-      await funding.save();
-  
       res.redirect('/tools/funding/expenses');
     } catch (err) {
       console.error('Error saving expense:', err);
@@ -337,61 +337,49 @@ router.get('/funding/requirements', async (req, res) => {
     }
   });
   
+  
 
-
-router.post('/funding/expenses/:id/update', async (req, res) => {
-  const { id } = req.params;
-  const { date, description, amount } = req.body;
-
-  try {
-    const expense = await Expense.findById(id);
-    if (!expense) throw new Error('Expense not found');
-
-    const funding = await Funding.findOne(); 
-    if (!funding) throw new Error('Funding not found');
-
-    
-    funding.remaining += expense.amount;
-    funding.remaining -= parseFloat(amount);
-
-    
-    expense.date = date;
-    expense.description = description;
-    expense.amount = parseFloat(amount);
-    await expense.save();
-    await funding.save();
-
-    res.redirect('/tools/funding/expenses');
-  } catch (err) {
-    console.error('Update error:', err);
-    res.render('tools/funding/expenses', {
-      error: 'Could not update expense.',
-      expenses: [],
-      remaining: 0,
-    });
-  }
-});
+  router.post('/funding/expenses/:id/update', ensureAuthenticated, async (req, res) => {
+    try {
+      const { date, description, amount } = req.body;
+      const userId = req.user._id;
+  
+      const expense = await Expense.findOne({ _id: req.params.id, createdBy: userId });
+      if (!expense) {
+        return res.status(404).send('Expense not found or not yours');
+      }
+  
+      expense.date = date;
+      expense.description = description;
+      expense.amount = parseFloat(amount);
+      await expense.save();
+  
+      res.redirect('/tools/funding/expenses');
+    } catch (err) {
+      console.error('Update error:', err);
+      res.status(500).send('Could not update expense.');
+    }
+  });  
 
 
   // DELETE Expense
-router.post('/funding/expenses/:id/delete', ensureAuthenticated, async (req, res) => {
-  try {
-    const expense = await Expense.findById(req.params.id);
-    const funding = await Funding.findOne({ createdBy: req.user._id });
-
-    if (!expense || !funding) return res.status(404).send('Expense or funding not found');
-
-    funding.amount += expense.amount;
-    await funding.save();
-
-    await expense.deleteOne();
-
-    res.redirect('/tools/funding/expenses');
-  } catch (err) {
-    console.error('Error deleting expense:', err);
-    res.status(500).send('Failed to delete expense');
-  }
-});
+  router.post('/funding/expenses/:id/delete', ensureAuthenticated, async (req, res) => {
+    try {
+      const userId = req.user._id;
+  
+      const expense = await Expense.findOne({ _id: req.params.id, createdBy: userId });
+      if (!expense) {
+        return res.status(404).send('Expense not found or not yours');
+      }
+  
+      await expense.deleteOne();
+      res.redirect('/tools/funding/expenses');
+    } catch (err) {
+      console.error('Error deleting expense:', err);
+      res.status(500).send('Failed to delete expense');
+    }
+  });
+  
 
 
 
