@@ -1,0 +1,126 @@
+<%- include('partials/appheader') %>
+
+<main id="chat-main">
+  <section class="chat-header">
+    <h2>Chat with <%= friendName %></h2> <!-- Friend's name will be passed in the route -->
+  </section>
+
+  <section id="chat-container">
+    <section id="chat-history">
+      <!-- <% let lastSender = null; %>
+      <% for (let i = 0; i < messages.length; i++) {
+          const msg = messages[i];
+          const isSameGroup = (msg.sender.toString() === lastSender);
+          const groupClass = (msg.sender.toString() === currentUserId.toString()) ? 'outgoing' : 'incoming';
+      %>
+        <% if (!isSameGroup) { %>
+          <section class="message-group <%= groupClass %>">
+        <% } %>
+            <section class="message">
+              <%= msg.text %>
+              <span class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></span>
+            </section>
+        <% if (!isSameGroup) { %>
+          </section>
+        <% } %>
+      <% lastSender = msg.sender.toString(); } %> -->
+    </section>
+
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<form id="message-form" enctype="multipart/form-data">
+  <input id="message-input" autocomplete="off" placeholder="Type a message..." />
+  <input type="file" id="file-input" style="display: none;" />
+  <label for="file-input" class="file-label" style="cursor: pointer; margin-left: 8px;">
+    <i class="fa-solid fa-paperclip" style="color: white; font-size: 20px;"></i>
+  </label>
+  <button type="submit">Send</button>
+</form>
+  
+  </section>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const currentUserId = "<%= currentUserId %>";
+    const friendId = "<%= friendId %>";
+    let lastSender = null;
+
+    // Join the room based on user ID
+    // Join the room based on user ID and friend ID
+socket.emit('join', { userId: currentUserId, friendId: friendId });
+
+
+    document.getElementById('message-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('message-input');
+      const text = input.value.trim();
+      if (text) {
+        socket.emit('chat message', { from: currentUserId, to: friendId, text: text });
+        input.value = '';
+      }
+    });
+
+    socket.on('chat message', function(message) {
+      const sender = message.sender;
+      const groupClass = (sender === currentUserId) ? 'outgoing' : 'incoming';
+      const chatHistory = document.getElementById('chat-history');
+      let lastGroup = chatHistory.querySelector('.message-group:last-child');
+
+      if (lastSender === sender && lastGroup && lastGroup.classList.contains(groupClass)) {
+        const msgsection = document.createElement('section');
+        msgsection.className = 'message';
+        msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+        lastGroup.appendChild(msgsection);
+      } else {
+        const groupsection = document.createElement('section');
+        groupsection.className = `message-group ${groupClass}`;
+        const msgsection = document.createElement('section');
+        msgsection.className = 'message';
+        msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+        groupsection.appendChild(msgsection);
+        chatHistory.appendChild(groupsection);
+      }
+
+      lastSender = sender;
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    });
+
+  socket.on('chat history', function(messages) {
+  const chatHistory = document.getElementById('chat-history');
+  chatHistory.innerHTML = ''; // Clear existing messages to avoid duplication
+  lastSender = null;
+
+  messages.forEach(function(message) {
+    const sender = message.sender;
+    const groupClass = (sender === currentUserId) ? 'outgoing' : 'incoming';
+    let lastGroup = chatHistory.querySelector('.message-group:last-child');
+
+    if (lastSender === sender && lastGroup && lastGroup.classList.contains(groupClass)) {
+      const msgsection = document.createElement('section');
+      msgsection.className = 'message';
+      msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+      lastGroup.appendChild(msgsection);
+    } else {
+      const groupsection = document.createElement('section');
+      groupsection.className = `message-group ${groupClass}`;
+      const msgsection = document.createElement('section');
+      msgsection.className = 'message';
+      msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+      groupsection.appendChild(msgsection);
+      chatHistory.appendChild(groupsection);
+    }
+
+    lastSender = sender;
+  });
+
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+});
+
+
+  </script>
+</main>
+
+
+<%- include('partials/footer') %>

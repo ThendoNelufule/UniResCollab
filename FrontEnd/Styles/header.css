@@ -15,7 +15,7 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: var(--space-cadet);
+    background: #0a0f1f;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -133,6 +133,13 @@ main#researcher {
     transition: var(--transition);
 }
 
+.btn-fill {
+    background: var(--powder-blue);
+    padding: 0.75rem 1.75rem;
+    border-radius: 2rem;
+    transition: var(--transition);
+}
+
 .btn-filled:hover {
     background: var(--honeydew);
     color: var(--space-cadet);
@@ -145,7 +152,7 @@ main#researcher {
     color: var(--honeydew);
     padding: 4rem 2rem;
     margin-top: auto;
-    background-color: #2B2D42;
+    background-color:  #0a0f1f;
 }
 
 .footer-content {

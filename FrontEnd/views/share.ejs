@@ -1,0 +1,27 @@
+
+<%- include('partials/appheader') %>
+
+<h1>Upload a PDF File</h1>
+<form action="/files/upload" method="POST" enctype="multipart/form-data">
+
+  <input type="file" name="pdf" accept=".pdf" required>
+  <button type="submit" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background-color: #2980b9; color: white; font-weight: bold; border: none; border-radius: 0.5rem; cursor: pointer;">
+    📥 Upload
+  </button>
+</form>
+
+<h1>Uploaded Files</h1>
+
+<ul id="fileList">
+  <% if (typeof files !== 'undefined' && files.length > 0) { %>
+    <% files.forEach(function(file) { %>
+      <li>
+        <a href="/files/files/<%= file._id %>" target="_blank"><%= file.name %></a>
+      </li>
+    <% }); %>
+  <% } else { %>
+    <li>No files uploaded yet.</li>
+  <% } %>
+</ul>
+
+<%- include('partials/footer') %>

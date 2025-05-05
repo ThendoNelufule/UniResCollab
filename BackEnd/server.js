@@ -6,42 +6,47 @@ const authRoutes = require('./Routes/authRoutes');
 const userRoute = require('./Routes/userRoutes');
 const expressLayouts = require('express-ejs-layouts');
 const projectRouter = require('./Routes/projectRouter.js');
+const toolsRouter = require('./Routes/toolsRouter.js');
 const methodOverride = require('method-override');
-require('dotenv').config({ path: path.join(__dirname,'..', '.env') });
-// Enable method override for form methods like DELETE and PUT
-
+const fileRoutes = require('./Routes/fileRouters');
 const { DB } = require('./config/database');
+const Message = require('./Models/Message'); // Import Message model
+require('dotenv').config({ path: path.join(__dirname,'..', '.env') });
 
 const app = express();
-const PORT = process.env.PORT || 8080
+const http = require('http').createServer(app); // Create HTTP server
+const io = require('socket.io')(http);
 
-//This Middleware is for rendering the ejs
+const PORT = process.env.PORT || 4000;
+
+// Middlewares
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts');
 app.set('views', path.join(__dirname, '..','FrontEnd', 'views'));
 app.use(express.static(path.join(__dirname, '..','FrontEnd')));
-app.use(express.static(path.join(__dirname,'..','public')));
+app.use(express.static(path.join(__dirname, '..','public')));
 app.use(express.json());
-
-// Here i initialise sessions 
 app.use(express.urlencoded({ extended: true }));
-app.use(session({secret:process.env.SESSION_SECRET,resave: false,saveUninitialized: false}));
+app.use('/files', fileRoutes);
 
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
-app.use('/auth',authRoutes);
+// Routes
+app.use('/auth', authRoutes);
 app.use('/', authRoutes);
-
-//This is the route for users
 app.use('/', userRoute);
-
-// This is the route for projects
 app.use('/researcher/projects', projectRouter);
+app.use('/tools', toolsRouter);
 
-//I am going to use this function later on...
+// Admin Home
 app.get('/Admin/Home', (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect('/login');
@@ -56,12 +61,58 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// --- Socket.IO logic ---
+io.on('connection', (socket) => {
+  console.log('A user connected');
 
+  socket.on('join', async ({ userId, friendId }) => {
+    const roomId = [userId, friendId].sort().join('-'); // Same as used in emit
+    socket.join(roomId); // <-- This is critical
+  
+    try {
+      const messages = await Message.find({
+        $or: [
+          { sender: userId, recipient: friendId },
+          { sender: friendId, recipient: userId }
+        ]
+      }).sort({ timestamp: 1 });
+  
+      socket.emit('chat history', messages);
+    } catch (err) {
+      console.error("Failed to load messages:", err);
+    }
+  });
+  
+  
+  
+  socket.on('chat message', async ({ from, to, text }) => {
+    const roomId = [from, to].sort().join('-');
+    try {
+      const message = new Message({
+        sender: from,
+        recipient: to,
+        text,
+        timestamp: new Date()
+      });
+      await message.save();
+  
+      io.to(roomId).emit('chat message', message); // Send to both users in the room
+  
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
 
+// Start server
 const startServer = async () => {
   try {
     await DB();
-    app.listen(PORT, () => {
+    http.listen(PORT, () => { // Listen on HTTP server, not app
       console.log(`Server running at http://localhost:${PORT}`);
     });
   } catch (err) {
@@ -70,3 +121,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+module.exports = app;

@@ -15,5 +15,6 @@ function ensureAuthenticated(req, res, next) {
     res.status(403).send('Access denied. Researcher role required.');
   }
   
+  
   module.exports = { ensureAuthenticated, ensureResearcher };
   

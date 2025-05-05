@@ -1,0 +1,85 @@
+<%- include('partials/appheader') %>
+
+<main style="padding: 2rem; max-width: 900px; margin: auto; font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #f4f9ff, #ffffff); min-height: 100vh;">
+  <h2 style="font-size: 2rem; font-weight: bold; color: #2c3e50;">💸 Expense Tracker</h2>
+  <p style="margin-bottom: 1.5rem; color: #555;">Track how your funding is being spent.</p>
+
+  <% if (error) { %>
+    <section style="background-color: #ffe6e6; border: 2px solid #e74c3c; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0.75rem; color: #c0392b;">
+      <strong>🚫 Error:</strong> <%= error %>
+    </section>
+  <% } %>
+
+  <section style="margin-bottom: 2.5rem; background-color: #fdfdfd; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <h3 style="margin-bottom: 1rem; color: #34495e;">➕ Add Expense</h3>
+    <form method="POST" action="/tools/funding/expenses" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <section style="flex: 1; min-width: 180px;">
+        <label for="date" style="font-weight: bold;">Date of Expense</label><br>
+        <input type="date" id="date" name="date" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc;">
+      </section>
+
+      <section style="flex: 2; min-width: 250px;">
+        <label for="description" style="font-weight: bold;">Description</label><br>
+        <input type="text" id="description" name="description" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc;">
+      </section>
+
+      <section style="flex: 1; min-width: 180px;">
+        <label for="amount" style="font-weight: bold;">Amount</label><br>
+        <input type="number" id="amount" name="amount" required step="0.01" min="0" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc;">
+      </section>
+
+      <section style="align-self: flex-end;">
+        <button type="submit" style="padding: 0.6rem 1.5rem; background-color: #27ae60; color: white; font-weight: bold; border: none; border-radius: 0.5rem; cursor: pointer;">💾 Save</button>
+      </section>
+    </form>
+  </section>
+
+  <section style="background-color: #fdfdfd; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+    <h3 style="margin-bottom: 1rem; color: #34495e;">📑 Expense Records</h3>
+    <% if (expenses.length > 0) { %>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead style="background-color: #ecf0f1;">
+          <tr>
+            <th style="padding: 0.75rem; text-align: left; font-weight: bold;">Date</th>
+            <th style="padding: 0.75rem; text-align: left; font-weight: bold;">Description</th>
+            <th style="padding: 0.75rem; text-align: center; font-weight: bold;">Amount</th>
+            <th style="padding: 0.75rem; text-align: center; font-weight: bold;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% expenses.forEach(exp => { %>
+            <tr style="border-bottom: 1px solid #ddd;">
+              <td style="padding: 0.75rem;"><%= exp.date ? new Date(exp.date).toLocaleDateString() : 'N/A' %></td>
+              <td style="padding: 0.75rem;"><%= exp.description || '—' %></td>
+              <td style="padding: 0.75rem; text-align: center;">R <%= typeof exp.amount === 'number' ? exp.amount.toFixed(2) : '0.00' %></td>
+              <td style="padding: 0.75rem; text-align: center;">
+                <!-- Edit -->
+                <form method="POST" action="/tools/funding/expenses/<%= exp._id %>/update" style="display: inline-block; margin-right: 0.5rem;">
+                  <input type="hidden" name="date" value="<%= exp.date ? exp.date.toISOString().substring(0, 10) : '' %>">
+                  <input type="hidden" name="description" value="<%= exp.description %>">
+                  <input type="hidden" name="amount" value="<%= exp.amount %>">
+                  <button type="submit" style="padding: 0.4rem 0.8rem; background-color: #f1c40f; border: none; border-radius: 0.4rem; cursor: pointer;">✏️ Edit</button>
+                </form>
+
+                <!-- Delete -->
+                <form method="POST" action="/tools/funding/expenses/<%= exp._id %>/delete" style="display: inline-block;">
+                  <button type="submit" style="padding: 0.4rem 0.8rem; background-color: #e74c3c; color: white; border: none; border-radius: 0.4rem; cursor: pointer;">🗑️ Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p style="color: #888;">No expenses recorded yet.</p>
+    <% } %>
+  </section>
+
+  <% if (typeof remaining !== 'undefined') { %>
+    <section style="margin-top: 2rem; background-color: #e0f7ea; padding: 1.25rem; border-radius: 1rem; font-size: 1.2rem; font-weight: bold; color: #2c7a4b; text-align: center;">
+      💰 Remaining Budget: R <%= remaining.toFixed(2) %>
+    </section>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
