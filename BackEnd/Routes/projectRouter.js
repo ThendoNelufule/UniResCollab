@@ -83,6 +83,9 @@ router.post('/removeCollaborator', async (req, res) => {
   }
 });
 
+
+
+
 router.get('/all', async (req, res) => {
   try {
     const projects = await Project.find({});

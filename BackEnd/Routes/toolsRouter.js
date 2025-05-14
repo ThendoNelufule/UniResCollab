@@ -7,22 +7,82 @@ const User = require('../Models/userModel');
 const Funding = require('../Models/Funding');
 const FundingRequirement = require('../Models/FundingRequirement');
 const Expense = require('../Models/Expense');
+const Report = require('../Models/Reports');  // note that i added the Reports model
+const FeedbackModel = require('../Models/Feedback'); //added the feedback model as well as the review model see next line
+const ReviewModel = require('../Models/Review');
+const Project = require('../Models/project');
 
+
+
+router.get('/admin/analysis', async (req, res) => {
+  try {
+    const totalProjects = await Project.countDocuments({});
+    const publishedProjects = await Project.countDocuments({ visibility: 'public' });
+    const totalUsers = await User.countDocuments({});
+
+    res.render('analysis.ejs', {
+      totalProjects,
+      publishedProjects,
+      totalUsers
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
   
-router.get('/admin/analysis', (req, res) => {
-    res.render('analysis.ejs');
+router.get('/review/feedbacks/:id', async (req, res) => {
+  const projectId = req.params.id;
+
+  // Fetch feedback from DB (if needed)
+  const feedback = await FeedbackModel.find({ project: projectId });
+
+  // Pass projectId and feedback into the view
+  res.render('feedback.ejs', { projectId, feedback });
 });
 
-router.get('/review/feedbacks', (req, res) => {
-    res.render('feedback.ejs');
+router.post('/feedback/:id', async (req, res) => {
+  const projectId = req.params.id;
+  const { comment } = req.body;
+
+  try {
+    // Save the comment (you can customize schema fields)
+    await FeedbackModel.create({
+      project: projectId,
+      comment: comment,
+      createdAt: new Date()
+    });
+
+    // Redirect back to the feedback page
+    res.redirect(`/review/feedbacks/${projectId}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
 });
 
-router.get('/review/publications', (req, res) => {
-    res.render('publication.ejs');
+
+// Route to display the publications (published reports)
+router.get('/review/publications', async (req, res) => {
+  try {
+    // Fetch all published reports from the database
+    const reports = await Report.find({ visibility: 'published' });
+
+    // Pass the reports to the publication view
+    res.render('publication', { reports });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching reports');
+  }
 });
 
-router.get('/review/reviews', (req, res) => {
-    res.render('reviews.ejs');
+router.get('/review/reviews/:id', async (req, res) => {
+  const projectId = req.params.id;
+
+  // Example: Fetch reviews from DB
+  const reviews = await ReviewModel.find({ project: projectId });
+
+  res.render('reviews.ejs', { reviews });
 });
 
 router.get('/fund', (req, res) => {

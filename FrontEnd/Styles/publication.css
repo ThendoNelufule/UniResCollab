@@ -1,0 +1,130 @@
+/* General styling for the publication page */
+.publication-container {
+    padding: 20px;
+    background-color: #15304e;
+    width: 100%;
+  }
+  
+  .publication-header {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .report-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Adjust based on how many columns you want */
+    gap: 20px;
+  }
+  
+  .report-item {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .report-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .report-title {
+    font-size: 1.6rem;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .report-domain, .report-institution, .report-pi, .report-abstract {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  
+  /* Button styling */
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .action-button {
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .action-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .action-button:disabled {
+    background-color: #c4c4c4;
+    cursor: not-allowed;
+  }
+  
+  .status-button {
+    background-color: #28a745;
+  }
+  
+  .funding-button {
+    background-color: #ffc107;
+  }
+  
+  .custom-view-button {
+    background-color: #17a2b8;
+  }
+  
+  .export-csv-button {
+    background-color: #007bff;
+  }
+  
+  .export-pdf-button {
+    background-color: #6f42c1;
+  }
+  
+  /* Responsive design */
+  @media screen and (max-width: 1200px) {
+    .report-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .report-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .publication-header {
+      font-size: 1.5rem;
+    }
+  
+    .report-item {
+      padding: 15px;
+    }
+  
+    .action-button {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+  }
+  
+  .no-reports {
+    font-size: 1.2rem;
+    color: #777;
+  }
+  

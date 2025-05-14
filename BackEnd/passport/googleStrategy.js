@@ -11,7 +11,7 @@ require('dotenv').config({ path: path.join(__dirname, '..','..', '.env') });
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://unirescollab-a0bgfbhzcfg6angs.southafricanorth-01.azurewebsites.net/auth/google/callback'
+    callbackURL: 'http://localhost:4000/auth/google/callback'
   },
   async (accessToken, refreshToken, profile, done) => {
     const newUser = {

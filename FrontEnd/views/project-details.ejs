@@ -190,6 +190,18 @@
                 Delete Project
               </button>
             </form>
+
+            <% if (user.role === 'Researcher' && project.visibility !== 'published') { %>
+              <form action="/researcher/projects/<%= project._id %>/publish" method="POST">
+                <button type="submit" class="action-button primary">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                  </svg>
+                  Publish Project
+                </button>
+              </form>
+            <% } %>
+            
   
           </section>
         <% } %>

@@ -119,31 +119,47 @@
             <section class="suite-grid">
                 <article class="tool-card">
                     <h3>Neural Discussions</h3><br>
-                    <h5>Context-aware messaging with AI-powered knowledge extraction</h5><br>
+                    <h5>Dashboard</h5><br>
                     <ul class="tool-features">
-                        <li>Real-time translation</li><br>
-                        <li>Citation generation</li><br>
+                        <li>Review published projects</li><br>
+                        <li>Download a report</li><br>
+                        <li>See the stats for a project</li><br>
                     </ul>
+                    <form action="/tools/review/publications" method="get">
+                        <button type="submit" class="neu-button">
+                            Publications →
+                        </button>
+                    </form>
                 </article>
     
                 <article class="tool-card">
                     <h3>Quantum Documents</h3><br>
                     <h5>Blockchain-versioned research papers with dynamic citations</h5><br>
                     <ul class="tool-features">
-                        <li>Auto-formatting</li><br>
-                        <li>Plagiarism shield</li><br>
-                        <li>Multi-modal editing</li>
+                        <li>Share research files</li><br>
+                        <li>View shared files</li><br>
+                        <li>collab with fellow reseachers</li>
                     </ul>
+                    <form action="/files/share" method="get">
+                        <button type="submit" class="neu-button">
+                            Document Sharing →
+                        </button>
+                    </form>
                 </article>
     
                 <article class="tool-card">
                     <h3>Milestone Sentinel</h3><br>
-                    <h5>Predictive progress tracking with risk mitigation</h5><br>
+                    <h5>Here you can:</h5><br>
                     <ul class="tool-features">
-                        <li>AI forecasting</li><br>
-                        <li>Resource alerts</li><br>
-                        <li>Scenario modeling</li>
+                        <li>View Project completion status </li><br>
+                        <li>See Funding used vs available</li><br>
+                        <li>And Custom view</li>
                     </ul>
+                    <form action="/researcher/projects/all" method="get">
+                        <button type="submit" class="neu-button">
+                            Projects Milestones →
+                        </button>
+                    </form>
                 </article>
             </section>
         </section>

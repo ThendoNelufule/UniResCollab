@@ -1,5 +1,17 @@
 <%- include('partials/appheader') %>
 
-<h1>This is the Analysis</h1>
+<main class="analysis-container">
+  <h1 class="analysis-title">Live App Analysis</h1>
+
+  <section class="analysis-section">
+    <h2 class="analysis-subtitle">Overview</h2>
+    <ul class="analysis-list">
+      <li class="analysis-item"><strong>Total Projects:</strong> <%= totalProjects %></li>
+      <li class="analysis-item"><strong>Published Projects:</strong> <%= publishedProjects %></li>
+      <li class="analysis-item"><strong>Total Users:</strong> <%= totalUsers %></li>
+    </ul>
+  </section>
+</main>
 
 <%- include('partials/footer') %>
+

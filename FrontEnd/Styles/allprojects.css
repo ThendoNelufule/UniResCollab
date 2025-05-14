@@ -1,0 +1,118 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+
+  
+  /* Main Container */
+  .mainall {
+    width: 100%;
+    padding: 2rem;
+    background-color: #151c29;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  /* Heading Styles */
+  h2 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 3rem;
+  }
+  
+  /* Project Cards Layout */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+  
+  .col-md-6 {
+    flex: 1 1 calc(50% - 1rem); /* Adjusts for 2 cards per row */
+    max-width: 48%;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border: 1px solid #dcdfe1;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card h5 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card a {
+    text-align: center;
+    font-weight: bold;
+    background-color: #2980b9;
+    color: white;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .card a:hover {
+    background-color: #3498db;
+  }
+  
+  /* Card Hover Effects */
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* No Projects Found */
+  .text-muted {
+    font-style: italic;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .col-md-6 {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  
+    h2 {
+      font-size: 2rem;
+    }
+  
+    h3 {
+      font-size: 1.2rem;
+    }
+  
+    .card a {
+      font-size: 1rem;
+    }
+  }
+  
