@@ -28,7 +28,6 @@
       <p class="no-reports">No published reports available.</p>
     <% } %>
   </main>
-  
 
 <!-- Include required JS libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -81,20 +80,18 @@
     doc.save('report_' + reportId + '.pdf');
   }
 
-  // View Project Completion Status (Placeholder)
-  function viewCompletionStatus(reportId) {
-    alert('Viewing Project Completion Status for Report ID: ' + reportId);
-  }
+function viewCompletionStatus(reportId) {
+  window.location.href = `/researcher/projects/report/${reportId}/completion-status`;
+}
 
-  // View Funding Used vs Available (Placeholder)
-  function viewFundingStatus(reportId) {
-    alert('Viewing Funding Status for Report ID: ' + reportId);
-  }
+function viewFundingStatus(reportId) {
+  window.location.href = `/researcher/projects/report/${reportId}/funding-status`;
+}
 
-  // View Custom View (Placeholder)
-  function viewCustomView(reportId) {
-    alert('Viewing Custom View for Report ID: ' + reportId);
-  }
+function viewCustomView(reportId) {
+  window.location.href = `/researcher/projects/report/${reportId}/custom-view`;
+}
+
 </script>
 
 <%- include('partials/footer') %>

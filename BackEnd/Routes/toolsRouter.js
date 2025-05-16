@@ -30,12 +30,54 @@ router.get('/admin/analysis', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// Example (assuming Express + Mongoose)
+
+router.get('/reviews/:id', async (req, res) => {
+  const userId = req.user._id; // current reviewer
+
+  const projects = await Project.find();
+  const reviews = await ReviewModel.find({}); // Only this user's reviews
+
+  res.render('reviews', { projects, reviews });
+});
+
+router.post('/reviews', async (req, res) => {
+  try {
+    const { projectId, rating, reviewText } = req.body;
+    const reviewer = req.user._id; 
+    const reviewerName = req.user.username;
+
+    // Prevent duplicate review per user per project
+    const existing = await ReviewModel.findOne({ reviewer, project: projectId });
+    if (existing) {
+      return res.redirect('/researcher/projects/all');
+    }
+
+    const review = new ReviewModel({
+      reviewer,
+      reviewerName,
+      project: projectId, // this matches the schema
+      rating,
+      reviewText,
+    });
+
+    await review.save();
+
+    res.redirect('/researcher/projects/all');
+  } catch (err) {
+    console.error('Error submitting review:', err);
+    res.status(500).send('Something went wrong');
+  }
+});
+
+
   
 router.get('/review/feedbacks/:id', async (req, res) => {
   const projectId = req.params.id;
 
   // Fetch feedback from DB (if needed)
-  const feedback = await FeedbackModel.find({ project: projectId });
+  const feedback = await FeedbackModel.find({ project: projectId }).populate('commenter','username');
 
   // Pass projectId and feedback into the view
   res.render('feedback.ejs', { projectId, feedback });
@@ -50,11 +92,12 @@ router.post('/feedback/:id', async (req, res) => {
     await FeedbackModel.create({
       project: projectId,
       comment: comment,
+      commenter: req.user._id,
       createdAt: new Date()
     });
 
     // Redirect back to the feedback page
-    res.redirect(`/review/feedbacks/${projectId}`);
+    res.redirect(`/tools/review/feedbacks/${projectId}`);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
@@ -76,14 +119,14 @@ router.get('/review/publications', async (req, res) => {
   }
 });
 
-router.get('/review/reviews/:id', async (req, res) => {
-  const projectId = req.params.id;
+// router.get('/review/reviews/:id', async (req, res) => {
+//   const projectId = req.params.id;
 
-  // Example: Fetch reviews from DB
-  const reviews = await ReviewModel.find({ project: projectId });
+//   // Example: Fetch reviews from DB
+//   const reviews = await ReviewModel.find({ project: projectId });
 
-  res.render('reviews.ejs', { reviews });
-});
+//   res.render('reviews.ejs', { reviews });
+// });
 
 router.get('/fund', (req, res) => {
     res.render('funds.ejs');

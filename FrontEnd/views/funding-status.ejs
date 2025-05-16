@@ -1,0 +1,26 @@
+<%- include('partials/appheader') %>
+
+<main class="funding-container">
+  <h1>Funding Status for "<%= report.title %>"</h1>
+
+  <h2>Funding Overview</h2>
+  <% if (fundingData.length > 0) { %>
+  <ul>
+    <% fundingData.forEach(f => { %>
+      <li>
+        <strong><%= f.title %></strong><br>
+        Source: <%= f.source %><br>
+        Total: <%= f.totalAmount %><br>
+        Spent: <%= f.amountSpent %><br>
+        Remaining: <%= f.remaining %><br>
+        From: <%= f.startDate?.toDateString() %> to <%= f.endDate?.toDateString() %>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No funding information available.</p>
+<% } %>
+
+</main>
+
+<%- include('partials/footer') %>

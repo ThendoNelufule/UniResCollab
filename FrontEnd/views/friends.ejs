@@ -11,7 +11,7 @@
             <figure class="friend-avatar">
               <figcaption><%= user.username.charAt(0).toUpperCase() %></figcaption>
             </figure>
-            <span class="friend-name"><%= user.username %></span>
+            <strong class="friend-name"><%= user.username %></strong>
             <a href="/tools/chat/<%= user._id %>" class="chat-link">Chat</a>
           </li>
         <% }) %>

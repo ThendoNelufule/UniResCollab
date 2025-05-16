@@ -6,7 +6,9 @@ const { ensureAuthenticated, ensureResearcher } = require('../middleware/authMid
 const flash = require('express-flash');
 const Project = require('../Models/project');
 const User = require('../Models/userModel');
-
+const Report = require('../Models/Reports');
+const Funding = require('../Models/Funding');
+const Expense = require('../Models/Expense');
 
 
 // Use flash after session setup
@@ -39,6 +41,54 @@ router.get('/project-details/:id/invite-collaborators', ensureAuthenticated, pro
 router.get('/searchUser', projectController.searchUserByUsername);
 
 router.post('/addCollaborator', ensureAuthenticated, projectController.addCollaborator);
+
+router.post('/:projectId/publish', projectController.publishProject);
+
+router.get('/report/:id/completion-status', async (req, res) => {
+  const report = await Report.findById(req.params.id);
+  res.render('completion-status', { report });
+});
+
+router.get('/report/:id/funding-status', async (req, res) => {
+  try {
+    const reportId = req.params.id;
+    const userId = req.user._id;
+
+    const report = await Report.findById(reportId);
+    if (!report) return res.status(404).send('Report not found');
+
+    const fundings = await Funding.find({ createdBy: userId });
+
+    // For each funding, calculate total expenses
+    const fundingData = await Promise.all(
+      fundings.map(async (fund) => {
+        const expenses = await Expense.find({ fundingId: fund._id });
+        const amountSpent = expenses.reduce((total, e) => total + (e.amount || 0), 0);
+
+        return {
+          title: fund.title,
+          source: fund.source,
+          totalAmount: fund.totalAmount,
+          amountSpent,
+          remaining: fund.totalAmount - amountSpent,
+          startDate: fund.startDate,
+          endDate: fund.endDate
+        };
+      })
+    );
+
+    res.render('funding-status', { report, fundingData });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error loading funding status');
+  }
+});
+
+router.get('/report/:id/custom-view', async (req, res) => {
+  const report = await Report.findById(req.params.id);
+  res.render('custom-view', { report });
+});
 
 
 router.get('/:projectId/collaborators', async (req, res) => {

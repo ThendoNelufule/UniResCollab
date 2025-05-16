@@ -1,19 +1,96 @@
 <%- include('partials/appheader') %>
 
-<main style="max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);width: 800px;">
+<main style="max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
   <h1 style="font-size: 28px; margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Project Reviews</h1>
 
-  <% if (reviews && reviews.length > 0) { %>
-    <ul style="list-style: none; padding: 0;">
-      <% reviews.forEach(r => { %>
-        <li style="background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 12px;">
-          <p style="margin: 0; font-size: 16px;"><strong><%= r.reviewerName %>:</strong> <%= r.reviewText %></p>
-        </li>
+  <!-- All Reviews Section -->
+  <section style="margin-bottom: 40px;">
+    <h2 style="font-size: 22px; margin-bottom: 10px;">All Reviews</h2>
+    <% if (reviews && reviews.length === 0) { %>
+      <p>No reviews yet.</p>
+    <% } else { %>
+      <% reviews.forEach(review => { %>
+        <section style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <p><strong>Reviewer:</strong> <%= review.reviewerName %></p>
+          <p><strong>Rating:</strong>
+            <% for (let i = 1; i <= 5; i++) { %>
+              <strong style="color: <%= i <= review.rating ? '#f39c12' : '#ccc' %>;">★</strong>
+            <% } %>
+          </p>
+          <p><strong>Review:</strong> <%= review.reviewText %></p>
+        </section>
       <% }) %>
-    </ul>
-  <% } else { %>
-    <p style="color: #777;">No reviews available yet for this project.</p>
-  <% } %>
+    <% } %>
+  </section>
+
+  <!-- Individual Project Sections with Review Form -->
+  <% projects.forEach(project => { %>
+    <section style="background: #f1f1f1; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+      <h2 style="margin: 0 0 10px;"><%= project.name %></h2>
+      <p style="margin: 0 0 10px; color: #555;"><%= project.description %></p>
+
+      <% 
+        let review;
+        if (Array.isArray(reviews)) {
+          review = reviews.find(r => 
+            r.projectId && project._id &&
+            r.projectId.toString() === project._id.toString() &&
+            r.reviewerName === currentUser.username
+          );
+        }
+      %>
+
+      <% if (review) { %>
+        <section style="margin-top: 10px;">
+          <p><strong>You rated:</strong>
+            <% for (let i = 1; i <= 5; i++) { %>
+              <strong style="color: <%= i <= review.rating ? '#f39c12' : '#ccc' %>;">★</strong>
+            <% } %>
+          </p>
+          <p><strong>Your Review:</strong> <%= review.reviewText %></p>
+        </section>
+      <% } else { %>
+        <form action="/tools/reviews" method="POST" style="margin-top: 15px;">
+          <input type="hidden" name="projectId" value="<%= project._id %>">
+
+          <label><strong>Rate this project:</strong></label><br>
+
+          <section class="star-rating" style="direction: rtl; font-size: 25px;">
+            <% for (let i = 5; i >= 1; i--) { %>
+              <input type="radio" id="star-<%= project._id %>-<%= i %>" name="rating" value="<%= i %>" required />
+              <label for="star-<%= project._id %>-<%= i %>">★</label>
+            <% } %>
+          </section>
+
+          <textarea name="reviewText" rows="3" style="width: 100%; border-radius: 6px; padding: 8px; margin-top: 15px;" placeholder="Write your review..." required></textarea>
+          <br><br>
+          <button type="submit" style="padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Submit Review</button>
+        </form>
+      <% } %>
+    </section>
+  <% }); %>
 </main>
 
 <%- include('partials/footer') %>
+
+<style>
+  .star-rating {
+    display: flex;
+  }
+
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+
+  .star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .star-rating input[type="radio"]:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #f39c12;
+  }
+</style>

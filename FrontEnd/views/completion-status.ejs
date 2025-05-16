@@ -1,0 +1,12 @@
+<%- include('partials/appheader') %>
+
+<main class="status-container">
+  <h1>Project Completion Status</h1>
+  <p><strong>Title:</strong> <%= report.title %></p>
+  <p><strong>Progress:</strong> <%= report.progress || 'Not specified' %></p>
+  <p><strong>Start Date:</strong> <%= report.startDate %></p>
+  <p><strong>End Date:</strong> <%= report.endDate %></p>
+  <p><strong>Status:</strong> <%= report.completionStatus || 'Ongoing' %></p>
+</main>
+
+<%- include('partials/footer') %>

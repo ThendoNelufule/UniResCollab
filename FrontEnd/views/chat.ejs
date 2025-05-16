@@ -7,23 +7,7 @@
 
   <section id="chat-container">
     <section id="chat-history">
-      <!-- <% let lastSender = null; %>
-      <% for (let i = 0; i < messages.length; i++) {
-          const msg = messages[i];
-          const isSameGroup = (msg.sender.toString() === lastSender);
-          const groupClass = (msg.sender.toString() === currentUserId.toString()) ? 'outgoing' : 'incoming';
-      %>
-        <% if (!isSameGroup) { %>
-          <section class="message-group <%= groupClass %>">
-        <% } %>
-            <section class="message">
-              <%= msg.text %>
-              <span class="timestamp"><%= new Date(msg.timestamp).toLocaleTimeString() %></span>
-            </section>
-        <% if (!isSameGroup) { %>
-          </section>
-        <% } %>
-      <% lastSender = msg.sender.toString(); } %> -->
+      
     </section>
 
     <!-- Font Awesome CDN -->
@@ -68,14 +52,14 @@ socket.emit('join', { userId: currentUserId, friendId: friendId });
       if (lastSender === sender && lastGroup && lastGroup.classList.contains(groupClass)) {
         const msgsection = document.createElement('section');
         msgsection.className = 'message';
-        msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+        msgsection.innerHTML = `${message.text} <strong class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</strong>`;
         lastGroup.appendChild(msgsection);
       } else {
         const groupsection = document.createElement('section');
         groupsection.className = `message-group ${groupClass}`;
         const msgsection = document.createElement('section');
         msgsection.className = 'message';
-        msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+        msgsection.innerHTML = `${message.text} <strong class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</strong>`;
         groupsection.appendChild(msgsection);
         chatHistory.appendChild(groupsection);
       }
@@ -97,14 +81,14 @@ socket.emit('join', { userId: currentUserId, friendId: friendId });
     if (lastSender === sender && lastGroup && lastGroup.classList.contains(groupClass)) {
       const msgsection = document.createElement('section');
       msgsection.className = 'message';
-      msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+      msgsection.innerHTML = `${message.text} <strong class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</strong>`;
       lastGroup.appendChild(msgsection);
     } else {
       const groupsection = document.createElement('section');
       groupsection.className = `message-group ${groupClass}`;
       const msgsection = document.createElement('section');
       msgsection.className = 'message';
-      msgsection.innerHTML = `${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
+      msgsection.innerHTML = `${message.text} <strong class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</strong>`;
       groupsection.appendChild(msgsection);
       chatHistory.appendChild(groupsection);
     }

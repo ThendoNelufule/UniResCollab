@@ -7,7 +7,8 @@
     <ul style="list-style: none; padding: 0;">
       <% feedback.forEach(f => { %>
         <li style="background: #f1f1f1; padding: 15px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 12px;">
-          <p style="margin: 0; font-size: 16px;"><strong><%= f.userName %>:</strong> <%= f.comment %></p>
+          <p style="margin: 0; font-size: 16px;"><strong><%= f.commenter.username %>:</strong> <%= f.comment %></p>
+      
         </li>
       <% }) %>
     </ul>
@@ -16,7 +17,7 @@
   <% } %>
 
   <!-- Feedback Form -->
-  <form action="/feedback/<%= projectId %>" method="POST" style="margin-top: 30px;">
+  <form action="/tools/feedback/<%= projectId %>" method="POST" style="margin-top: 30px;">
     <label for="comment" style="font-weight: bold; display: block; margin-bottom: 8px;">Leave your feedback:</label>
     <textarea name="comment" id="comment" rows="4" required style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 12px;"></textarea>
     <button type="submit" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Submit Feedback</button>
