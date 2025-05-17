@@ -1,26 +1,26 @@
 <%- include('partials/appheader') %>
 
-<main style="max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 800px;">
-  <h1 style="font-size: 28px; margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Project Feedback</h1>
+<main class="feedback-page">
+  <h1 class="feedback-title">Project Feedback</h1>
 
   <% if (feedback && feedback.length > 0) { %>
-    <ul style="list-style: none; padding: 0;">
+    <ul class="feedback-list">
       <% feedback.forEach(f => { %>
-        <li style="background: #f1f1f1; padding: 15px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 12px;">
-          <p style="margin: 0; font-size: 16px;"><strong><%= f.commenter.username %>:</strong> <%= f.comment %></p>
-      
+        <li class="feedback-item">
+          <p class="feedback-comment">
+            <strong><%= f.commenter.username %>:</strong> <%= f.comment %>
+          </p>
         </li>
       <% }) %>
     </ul>
   <% } else { %>
-    <p style="color: #777;">No feedback submitted yet for this project.</p>
+    <p class="feedback-empty">No feedback submitted yet for this project.</p>
   <% } %>
 
-  <!-- Feedback Form -->
-  <form action="/tools/feedback/<%= projectId %>" method="POST" style="margin-top: 30px;">
-    <label for="comment" style="font-weight: bold; display: block; margin-bottom: 8px;">Leave your feedback:</label>
-    <textarea name="comment" id="comment" rows="4" required style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 12px;"></textarea>
-    <button type="submit" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Submit Feedback</button>
+  <form class="feedback-form" action="/tools/feedback/<%= projectId %>" method="POST">
+    <label for="comment">Leave your feedback:</label>
+    <textarea class="feedback-textarea" name="comment" id="comment" rows="4" required></textarea>
+    <button type="submit" class="feedback-submit">Submit Feedback</button>
   </form>
 </main>
 

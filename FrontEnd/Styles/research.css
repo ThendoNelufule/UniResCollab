@@ -8,7 +8,7 @@
     --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .researchbody{
-    background-color: #dbdcdd;
+    background: white;
 }
 
 .research-portal {
@@ -44,12 +44,12 @@
 
 /* Auto-Slideshow */
 .auto-slideshow {
-    max-width: 1400px;
+    width: 100%;
     margin: 2rem auto;
     border-radius: 20px;
     overflow: hidden;
     position: relative;
-    height: 70vh;
+    height: 90vh;
     perspective: 1000px;
 }
 
