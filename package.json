@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node BackEnd/server.js",
-    "test": "node BackEnd/server.js"
+    "start": "node BackEnd/server.js"
   },
   "keywords": [],
   "author": "",
