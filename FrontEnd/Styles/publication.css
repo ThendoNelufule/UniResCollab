@@ -1,130 +1,130 @@
-/* General styling for the publication page */
+/* === Publication Page Styling === */
 .publication-container {
-    padding: 20px;
-    background-color: #15304e;
+  padding: 40px 20px;
+  background-color: #112233;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+}
+
+.publication-header {
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 40px;
+  text-align: center;
+  border-bottom: 2px solid #1f3c60;
+  padding-bottom: 10px;
+}
+
+/* === Grid Layout for Reports === */
+.report-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.report-item {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.report-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* === Report Content === */
+.report-title {
+  font-size: 1.5rem;
+  color: #1e6fd9;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.report-domain,
+.report-institution,
+.report-pi,
+.report-abstract {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+strong {
+  color: #222;
+}
+
+/* === Buttons === */
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.action-button {
+  flex: 1 1 auto;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+  text-align: center;
+  min-width: 140px;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.status-button { background-color: #a37717; }
+.funding-button { background-color: #c7240f; color: #ffffff; }
+.custom-view-button { background-color: #0bb8d3; }
+.export-csv-button { background-color: #30b316; }
+.export-pdf-button { background-color: #0c38d4; }
+
+.action-button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+/* === No Reports Message === */
+.no-reports {
+  font-size: 1.3rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 80px;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .publication-header {
+    font-size: 1.7rem;
+  }
+
+  .action-button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .report-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-button {
     width: 100%;
   }
-  
-  .publication-header {
-    font-size: 2rem;
-    color: #ffffff;
-    margin-bottom: 20px;
-  }
-  
-  .report-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Adjust based on how many columns you want */
-    gap: 20px;
-  }
-  
-  .report-item {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .report-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .report-title {
-    font-size: 1.6rem;
-    color: #007bff;
-    margin-bottom: 10px;
-  }
-  
-  .report-domain, .report-institution, .report-pi, .report-abstract {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 10px;
-  }
-  
-  strong {
-    font-weight: bold;
-  }
-  
-  /* Button styling */
-  .action-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .action-button {
-    background-color: #007bff;
-    color: white;
-    font-size: 1rem;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .action-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .action-button:disabled {
-    background-color: #c4c4c4;
-    cursor: not-allowed;
-  }
-  
-  .status-button {
-    background-color: #28a745;
-  }
-  
-  .funding-button {
-    background-color: #ffc107;
-  }
-  
-  .custom-view-button {
-    background-color: #17a2b8;
-  }
-  
-  .export-csv-button {
-    background-color: #007bff;
-  }
-  
-  .export-pdf-button {
-    background-color: #6f42c1;
-  }
-  
-  /* Responsive design */
-  @media screen and (max-width: 1200px) {
-    .report-list {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    .report-list {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .publication-header {
-      font-size: 1.5rem;
-    }
-  
-    .report-item {
-      padding: 15px;
-    }
-  
-    .action-button {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    }
-  }
-  
-  .no-reports {
-    font-size: 1.2rem;
-    color: #777;
-  }
-  
+}

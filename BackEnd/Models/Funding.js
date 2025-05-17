@@ -8,6 +8,8 @@ const fundingSchema = new mongoose.Schema({
   endDate: Date,
   amountSpent: { type: Number, default: 0 }, 
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  
+ 
 }, { timestamps: true });
 
 module.exports = mongoose.model('Funding', fundingSchema);

@@ -1,97 +1,86 @@
 <%- include('partials/appheader') %>
 
 <main class="publication-container">
-    <h1 class="publication-header">Dashboard: Published Reports</h1>
-  
-    <% if (reports && reports.length > 0) { %>
-      <section class="report-list">
-        <% reports.forEach(report => { %>
-          <section class="report-item">
-            <h2 class="report-title"><%= report.title %></h2>
-            <p class="report-domain"><strong>Domain:</strong> <%= report.domain %></p>
-            <p class="report-institution"><strong>Institution:</strong> <%= report.institution %></p>
-            <p class="report-pi"><strong>Principal Investigator:</strong> <%= report.pi %></p>
-            <p class="report-abstract"><strong>Abstract:</strong> <%= report.abstract %></p>
-            
-            <!-- Buttons for actions -->
-            <section class="action-buttons">
-              <button class="action-button status-button" onclick="viewCompletionStatus('<%= report._id %>')">Project Completion Status</button>
-              <button class="action-button funding-button" onclick="viewFundingStatus('<%= report._id %>')">Funding Used vs Available</button>
-              <button class="action-button custom-view-button" onclick="viewCustomView('<%= report._id %>')">Custom View</button>
-              <button class="action-button export-csv-button" onclick="exportCSV('<%= report._id %>')">Export CSV</button>
-              <button class="action-button export-pdf-button" onclick="exportPDF('<%= report._id %>')">Export PDF</button>
-            </section>
-          </section>
-        <% }) %>
-      </section>
-    <% } else { %>
-      <p class="no-reports">No published reports available.</p>
-    <% } %>
-  </main>
+  <h1 class="publication-header">Dashboard: Published Reports</h1>
 
-<!-- Include required JS libraries -->
+  <% if (reports && reports.length > 0) { %>
+    <section class="report-list">
+      <% reports.forEach(report => { %>
+        <section class="report-item">
+          <h2 class="report-title"><%= report.title %></h2>
+          <p class="report-domain"><strong>Domain:</strong> <%= report.domain %></p>
+          <p class="report-institution"><strong>Institution:</strong> <%= report.institution %></p>
+          <p class="report-pi"><strong>Principal Investigator:</strong> <%= report.pi %></p>
+
+          <!-- Buttons for actions -->
+          <section class="action-buttons">
+            <button class="action-button status-button" onclick="viewCompletionStatus('<%= report._id %>')">Project Completion Status</button>
+            <button class="action-button funding-button" onclick="viewFundingStatus('<%= report._id %>')">Funding Used vs Available</button>
+            <button class="action-button custom-view-button" onclick="viewCustomView('<%= report._id %>')">Custom View</button>
+            <button class="action-button export-csv-button" onclick='exportCSV(<%- JSON.stringify(report) %>)'>Export CSV</button>
+            <button class="action-button export-pdf-button" onclick='exportPDF(<%- JSON.stringify(report) %>)'>Export PDF</button>
+          </section>
+        </section>
+      <% }) %>
+    </section>
+  <% } else { %>
+    <p class="no-reports">No published reports available.</p>
+  <% } %>
+</main>
+
+<!-- Include JS libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
 <script>
-  // Export to CSV function
-  function exportCSV(reportId) {
-    // For demonstration, we'll use mock data
+  function viewCompletionStatus(reportId) {
+    window.location.href = `/researcher/projects/report/${reportId}/completion-status`;
+  }
+
+  function viewFundingStatus(reportId) {
+  window.location.href = `/researcher/projects/report/${reportId}/funding-status`;
+}
+
+
+  function viewCustomView(reportId) {
+    window.location.href = `/researcher/projects/report/${reportId}/custom-view`;
+  }
+
+  function exportCSV(report) {
     const data = [
-      { title: 'Project Title', domain: 'Domain Name', institution: 'Institution Name', pi: 'PI Name', abstract: 'Abstract Here' },
-      // Add more data as needed
+      {
+        Title: report.title,
+        Domain: report.domain,
+        Institution: report.institution,
+        "Principal Investigator": report.pi,
+        Abstract: report.abstract
+      }
     ];
-
-    // Convert data to CSV using PapaParse
     const csv = Papa.unparse(data);
-
-    // Create a link to download CSV
     const link = document.createElement('a');
     link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    link.target = '_blank';
-    link.download = 'report_' + reportId + '.csv';
+    link.download = 'report_' + report._id + '.csv';
     link.click();
   }
 
-  // Export to PDF function
-  function exportPDF(reportId) {
-    // For demonstration, we'll use mock data
-    const reportData = {
-      title: 'Project Title',
-      domain: 'Domain Name',
-      institution: 'Institution Name',
-      pi: 'PI Name',
-      abstract: 'Abstract Here'
-    };
-
-    // Generate PDF using jsPDF
+  function exportPDF(report) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     doc.setFont('helvetica');
     doc.setFontSize(16);
-    doc.text('Report: ' + reportData.title, 20, 20);
-    doc.text('Domain: ' + reportData.domain, 20, 30);
-    doc.text('Institution: ' + reportData.institution, 20, 40);
-    doc.text('Principal Investigator: ' + reportData.pi, 20, 50);
-    doc.text('Abstract: ' + reportData.abstract, 20, 60);
+    let y = 20;
 
-    // Save the PDF
-    doc.save('report_' + reportId + '.pdf');
+    doc.text('Report: ' + report.title, 20, y); y += 10;
+    doc.text('Domain: ' + report.domain, 20, y); y += 10;
+    doc.text('Institution: ' + report.institution, 20, y); y += 10;
+    doc.text('Principal Investigator: ' + report.pi, 20, y); y += 10;
+
+    const abstractLines = doc.splitTextToSize('Abstract: ' + report.abstract, 170);
+    doc.text(abstractLines, 20, y);
+
+    doc.save('report_' + report._id + '.pdf');
   }
-
-function viewCompletionStatus(reportId) {
-  window.location.href = `/researcher/projects/report/${reportId}/completion-status`;
-}
-
-function viewFundingStatus(reportId) {
-  window.location.href = `/researcher/projects/report/${reportId}/funding-status`;
-}
-
-function viewCustomView(reportId) {
-  window.location.href = `/researcher/projects/report/${reportId}/custom-view`;
-}
-
 </script>
 
 <%- include('partials/footer') %>

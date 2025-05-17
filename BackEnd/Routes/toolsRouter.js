@@ -16,14 +16,43 @@ const Project = require('../Models/project');
 
 router.get('/admin/analysis', async (req, res) => {
   try {
-    const totalProjects = await Project.countDocuments({});
-    const publishedProjects = await Project.countDocuments({ visibility: 'public' });
-    const totalUsers = await User.countDocuments({});
+    const [
+      totalProjects,
+      publishedProjects,
+      privateProjects,
+      institutionalProjects,
+      embargoedProjects,
+      totalUsers,
+      totalReports,
+      domainCounts,
+      methodologyCounts
+    ] = await Promise.all([
+      Project.countDocuments({}),
+      Project.countDocuments({ visibility: 'public' }),
+      Project.countDocuments({ visibility: 'private' }),
+      Project.countDocuments({ visibility: 'institutional' }),
+      Project.countDocuments({ visibility: 'embargoed' }),
+      User.countDocuments({}),
+      Report.countDocuments({}),
+      Project.aggregate([
+        { $group: { _id: "$domain", count: { $sum: 1 } } }
+      ]),
+      Project.aggregate([
+        { $unwind: "$methodology" },
+        { $group: { _id: "$methodology", count: { $sum: 1 } } }
+      ])
+    ]);
 
     res.render('analysis.ejs', {
       totalProjects,
       publishedProjects,
-      totalUsers
+      privateProjects,
+      institutionalProjects,
+      embargoedProjects,
+      totalUsers,
+      totalReports,
+      domainCounts,
+      methodologyCounts
     });
   } catch (err) {
     console.error(err);
@@ -204,11 +233,6 @@ router.get('/funding/overview', async (req, res) => {
     }
   });
   
-  
-
-
-
-
 
 router.post('/send-message', async (req, res) => {
     try {
@@ -231,63 +255,60 @@ router.post('/send-message', async (req, res) => {
 });
 
 
-
-
-
-
 // GET /tools/funding
 router.get('/funding', async (req, res) => {
-    try {
-      const funding = await Funding.findOne(); 
-      const expenses = await Expense.find({});
-  
-      const totalSpent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-      const remaining = funding.total - totalSpent;
-  
-      res.render('tools/funding/overview', {
-        funding,
-        totalSpent,
-        remaining,
-      });
-    } catch (err) {
-      console.error('Error loading funding overview:', err);
-      res.render('tools/funding/overview', {
-        funding: {},
-        totalSpent: 0,
-        remaining: 0,
-        error: 'Could not load funding overview.',
-      });
-    }
-  });
-  
-
-router.post('/funding', async (req, res) => {
   try {
-    const { fundingTitle, fundingSource, totalAmount, startDate, endDate } = req.body;
+    const funding = await Funding.findOne(); 
+    const expenses = await Expense.find({});
 
-    
-    const existingFunding = await Funding.findOne({ createdBy: req.user._id });
-    if (existingFunding) {
-      
-      return res.status(400).send('You already have a funding entry. Cannot create more than one.');
-    }
+    const totalSpent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+    const remaining = funding.total - totalSpent;
 
-    const newFunding = new Funding({
-      title: fundingTitle,
-      source: fundingSource,
-      totalAmount,
-      startDate,
-      endDate,
-      createdBy: req.user._id
+    res.render('tools/funding/overview', {
+      funding,
+      totalSpent,
+      remaining,
     });
-
-    await newFunding.save();
-    res.redirect('/tools/funding/overview');
   } catch (err) {
-    console.error('Error saving funding:', err);
-    res.status(500).send('Something went wrong');
+    console.error('Error loading funding overview:', err);
+    res.render('tools/funding/overview', {
+      funding: {},
+      totalSpent: 0,
+      remaining: 0,
+      error: 'Could not load funding overview.',
+    });
   }
 });
+
+
+router.post('/funding', async (req, res) => {
+try {
+  const { fundingTitle, fundingSource, totalAmount, startDate, endDate } = req.body;
+
+  
+  const existingFunding = await Funding.findOne({ createdBy: req.user._id });
+  if (existingFunding) {
+    
+    return res.status(400).send('You already have a funding entry. Cannot create more than one.');
+  }
+
+  const newFunding = new Funding({
+    title: fundingTitle,
+    source: fundingSource,
+    totalAmount,
+    startDate,
+    endDate,
+    createdBy: req.user._id
+  });
+
+  await newFunding.save();
+  res.redirect('/tools/funding/overview');
+} catch (err) {
+  console.error('Error saving funding:', err);
+  res.status(500).send('Something went wrong');
+}
+});
+
 
 
 router.get('/funding/requirements', async (req, res) => {

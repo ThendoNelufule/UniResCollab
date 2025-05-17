@@ -12,7 +12,9 @@ const reportSchema = new mongoose.Schema({
   collaborators: [{ type: String }],
   visibility: { type: String, required: true, enum: ['published'] },
   projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'projects', required: true }, // Link to original project
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+
 });
 
 module.exports = mongoose.model('reports', reportSchema);

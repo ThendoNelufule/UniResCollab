@@ -77,7 +77,8 @@ router.get('/report/:id/funding-status', async (req, res) => {
       })
     );
 
-    res.render('funding-status', { report, fundingData });
+    res.render('funding-status', { report, fundings: fundingData });
+
 
   } catch (error) {
     console.error(error);

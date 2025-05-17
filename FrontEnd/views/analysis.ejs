@@ -3,15 +3,43 @@
 <main class="analysis-container">
   <h1 class="analysis-title">Live App Analysis</h1>
 
+  <!-- Overview Section -->
   <section class="analysis-section">
     <h2 class="analysis-subtitle">Overview</h2>
     <ul class="analysis-list">
       <li class="analysis-item"><strong>Total Projects:</strong> <%= totalProjects %></li>
-      <li class="analysis-item"><strong>Published Projects:</strong> <%= publishedProjects %></li>
+      <li class="analysis-item"><strong>Public Projects:</strong> <%= publishedProjects %></li>
+      <li class="analysis-item"><strong>Private Projects:</strong> <%= privateProjects %></li>
+      <li class="analysis-item"><strong>embargoed Projects:</strong> <%= embargoedProjects %></li>
+      <li class="analysis-item"><strong>institutional Projects:</strong> <%= institutionalProjects %></li>
+      <li class="analysis-item"><strong>Total Reports or Published Projects:</strong> <%= totalReports %></li>
       <li class="analysis-item"><strong>Total Users:</strong> <%= totalUsers %></li>
+    </ul>
+  </section>
+
+  <!-- Projects by Domain -->
+  <section class="analysis-section">
+    <h2 class="analysis-subtitle">Projects by Domain</h2>
+    <ul class="analysis-list">
+      <% domainCounts.forEach(d => { %>
+        <li class="analysis-item">
+          <strong><%= d._id %>:</strong> <%= d.count %>
+        </li>
+      <% }) %>
+    </ul>
+  </section>
+
+  <!-- Methodology Breakdown -->
+  <section class="analysis-section">
+    <h2 class="analysis-subtitle">Methodology Breakdown</h2>
+    <ul class="analysis-list">
+      <% methodologyCounts.forEach(m => { %>
+        <li class="analysis-item">
+          <strong><%= m._id %>:</strong> <%= m.count %>
+        </li>
+      <% }) %>
     </ul>
   </section>
 </main>
 
 <%- include('partials/footer') %>
-
