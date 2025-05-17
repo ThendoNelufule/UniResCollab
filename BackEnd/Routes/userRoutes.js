@@ -7,6 +7,27 @@ const OAuthUser = require('../Models/userModel');
 //These are the routes rendering each ejs page
 router.get('/',controller.welcome)
 
+//For going back if you are in a far page and you want to return to ur homepage like reviewer
+router.get('/home', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+
+  const user = req.user;
+
+  if (user.role === 'Admin') {
+    return res.redirect('/Admin/Home');
+  } else if (user.role === 'Reviewer') {
+    return res.redirect('/Reviewer/Home');
+  } else if (user.role === 'Researcher') {
+    return res.redirect('/Researcher/Home');
+  } else {
+    return res.redirect('/');
+  }
+});
+
+
+
 router.get('/about',function(req,res){
     res.render('about.ejs')
 });

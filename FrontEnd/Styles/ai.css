@@ -22,7 +22,9 @@
     width: 800px;
     margin: 0 auto;
     padding: 20px;
+    margin-top: 70px; /* Adjust this value as needed to create space */
 }
+
 
 h1 {
     text-align: center;

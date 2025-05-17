@@ -1,39 +1,39 @@
 <%- include('partials/appheader') %>
 
-<main style="padding: 2rem; font-family: 'Segoe UI', sans-serif; background-color: #090b0d; min-height: 100vh;">
-  <section style="max-width: 900px; margin: auto; background-color: #a1a1b6; border-radius: 1.25rem; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+<main style="padding: 2rem; font-family: 'Segoe UI', sans-serif; background-color: #11141a; min-height: 100vh;">
+  <section style="max-width: 900px; margin: auto; background-color: #ffffff; border-radius: 1.25rem; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
     
     <header style="margin-bottom: 2rem;">
-      <h2 style="font-size: 2.5rem; font-weight: 700; color: #2c3e50;">📊 Funding Overview</h2>
-      <p style="font-size: 1.2rem; color: #fff9f9;">Here’s a summary of your current project funding.</p>
+      <h2 style="font-size: 2.5rem; font-weight: 700; color: #000000;">Funding Overview</h2>
+      <p style="font-size: 1.2rem; color: #000000;">Here’s a summary of your current project funding.</p>
     </header>
 
     <% if (funding) { %>
       <article style="font-size: 1.1rem; line-height: 1.6;">
         
         <p><strong>📌 Project Name:</strong><br>
-        <span style="color: #333;"><%= funding.title %></span></p>
+        <strong style="color: #333;"><%= funding.title %></strong></p>
 
         <p><strong>💼 Funding Source:</strong><br>
-        <span style="color: #333;"><%= funding.source %></span></p>
+        <strong style="color: #333;"><%= funding.source %></strong></p>
 
         <p><strong>💰 Total Amount:</strong><br>
-        <span style="color: #27ae60;">R<%= funding.totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 }) %></span></p>
+        <strong style="color: #27ae60;">R<%= funding.totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 }) %></strong></p>
 
         <p><strong>📉 Total Amount Spent:</strong><br>
-        <span style="color: #e74c3c;">R<%= totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2 }) %></span></p>
+        <strong style="color: #e74c3c;">R<%= totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2 }) %></strong></p>
 
         <p><strong>📈 Remaining Budget:</strong><br>
-        <span style="color: #2980b9;">R<%= remaining.toLocaleString(undefined, { minimumFractionDigits: 2 }) %></span></p>
+        <strong style="color: #2980b9;">R<%= remaining.toLocaleString(undefined, { minimumFractionDigits: 2 }) %></strong></p>
 
         <p><strong>🗓️ Funding Period:</strong><br>
-        <span style="color: #333;">
+        <strong style="color: #333;">
           <%= new Date(funding.startDate).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long' }) %> –
           <%= new Date(funding.endDate).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long' }) %>
-        </span></p>
+        </strong></p>
 
         <p><strong>🔖 Status:</strong><br>
-        <span style="color: #27ae60;">🟢 Active</span></p>
+        <strong style="color: #27ae60;">🟢 Active</strong></p>
 
         <p><strong>📊 Usage Progress:</strong></p>
         <progress value="<%= totalSpent %>" max="<%= funding.totalAmount %>" style="width: 100%; height: 20px; margin-bottom: 0.5rem;"></progress>
@@ -44,7 +44,7 @@
     <% } %>
 
     <section style="margin-top: 2.5rem;">
-      <h3 style="font-size: 1.3rem; color: #444;">📝 Notes</h3>
+      <h3 style="font-size: 1.3rem; color: #444;">Notice!</h3>
       <p style="color: #0d0b0b;">This data is pulled live from the database. Make sure funding is submitted before visiting this page.</p>
     </section>
 

@@ -1,0 +1,62 @@
+<%- include('partials/appheader') %>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    color: #ffffff;
+  }
+
+  .status-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #0d2329bd;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  .status-container h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #ffffff;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+  }
+
+  .status-container p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .status-container strong {
+    color: #ffffff;
+  }
+
+  @media (max-width: 600px) {
+    .status-container {
+      padding: 20px;
+      margin: 20px;
+    }
+
+    .status-container h1 {
+      font-size: 1.5rem;
+    }
+
+    .status-container p {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<main class="status-container">
+  <h1>Project Completion Status</h1>
+  <p><strong>Title:</strong> <%= report.title %></p>
+  <p><strong>Start Date:</strong> <%= report.startDate %></p>
+  <p><strong>End Date:</strong> <%= report.endDate %></p>
+  <p><strong>Status:</strong> Published</p>
+</main>
+
+<%- include('partials/footer') %>

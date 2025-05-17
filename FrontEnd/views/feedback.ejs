@@ -1,5 +1,27 @@
 <%- include('partials/appheader') %>
 
-<h1>This is the feedback</h1>
+<main class="feedback-page">
+  <h1 class="feedback-title">Project Feedback</h1>
+
+  <% if (feedback && feedback.length > 0) { %>
+    <ul class="feedback-list">
+      <% feedback.forEach(f => { %>
+        <li class="feedback-item">
+          <p class="feedback-comment">
+            <strong><%= f.commenter.username %>:</strong> <%= f.comment %>
+          </p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="feedback-empty">No feedback submitted yet for this project.</p>
+  <% } %>
+
+  <form class="feedback-form" action="/tools/feedback/<%= projectId %>" method="POST">
+    <label for="comment">Leave your feedback:</label>
+    <textarea class="feedback-textarea" name="comment" id="comment" rows="4" required></textarea>
+    <button type="submit" class="feedback-submit">Submit Feedback</button>
+  </form>
+</main>
 
 <%- include('partials/footer') %>

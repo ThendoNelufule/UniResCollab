@@ -4,7 +4,7 @@ const projectSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }, // Fix here
 
   // Core Setup
-  title: { type: String, required: true, minlength: 10 },
+  title: { type: String, required: true, minlength: 3 },
   domain: { 
     type: String, 
     required: true, 

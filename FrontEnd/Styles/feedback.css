@@ -1,0 +1,109 @@
+.feedback-page {
+    width: 100%;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #475561;
+    border-radius: 14px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #222;
+  }
+  
+  .feedback-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e2e2;
+    padding-bottom: 12px;
+  }
+  
+  .feedback-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 35px 0;
+  }
+  
+  .feedback-item {
+    background: #ffffff;
+    padding: 18px 22px;
+    border-left: 4px solid #007bff;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .feedback-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.1);
+  }
+  
+  .feedback-comment {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+  }
+  
+  .feedback-empty {
+    color: #666;
+    font-style: italic;
+    background-color: #f5f5f5;
+    padding: 15px 20px;
+    border-radius: 6px;
+    border-left: 4px solid #bbb;
+    margin-bottom: 25px;
+  }
+  
+  .feedback-form {
+    margin-top: 40px;
+    background: #f7faff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    border: 1px solid #d9e6f2;
+  }
+  
+  .feedback-form label {
+    font-weight: 600;
+    font-size: 15.5px;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+  }
+  
+  .feedback-textarea {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: inherit;
+    margin-bottom: 18px;
+    resize: vertical;
+    transition: border 0.25s ease;
+  }
+  
+  .feedback-textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+  
+  .feedback-submit {
+    background: linear-gradient(135deg, #222e3a, #09111a);
+    color: white;
+    padding: 12px 26px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .feedback-submit:hover {
+    background: linear-gradient(135deg, #48505a, #b3bac2);
+    transform: translateY(-1px);
+  }
+  

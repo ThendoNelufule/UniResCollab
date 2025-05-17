@@ -1,0 +1,73 @@
+<%- include('partials/appheader') %>
+
+<style>
+  .funding-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+
+  .funding-header {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    color: #007bff;
+  }
+
+  .report-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+
+  .funding-block {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .funding-block p {
+    margin: 8px 0;
+    font-size: 1rem;
+  }
+
+  .highlight {
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .no-funding {
+    font-style: italic;
+    color: #888;
+    margin-top: 20px;
+  }
+</style>
+
+<main class="funding-container">
+  <h1 class="funding-header">Funding Used vs Available</h1>
+
+  <p class="report-title"><strong>Report Title:</strong> <%= report.title %></p>
+
+  <% if (fundings && fundings.length > 0) { %>
+    <% fundings.forEach(fund => { %>
+      <section class="funding-block">
+        <p><span class="highlight">Title:</span> <%= fund.title %></p>
+        <p><span class="highlight">Source:</span> <%= fund.source %></p>
+        <p><span class="highlight">Total Amount:</span> $<%= fund.totalAmount.toLocaleString() %></p>
+        <p><span class="highlight">Amount Spent:</span> $<%= fund.amountSpent.toLocaleString() %></p>
+        <p><span class="highlight">Remaining:</span> $<%= (fund.totalAmount - fund.amountSpent).toLocaleString() %></p>
+        <p><span class="highlight">Duration:</span> <%= fund.startDate ? fund.startDate.toDateString() : 'N/A' %> to <%= fund.endDate ? fund.endDate.toDateString() : 'N/A' %></p>
+      </section>
+    <% }) %>
+  <% } else { %>
+    <p class="no-funding">No funding data available for this report.</p>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

@@ -21,7 +21,7 @@
   }
   
   .adminbody{
-    background-color: rgb(27, 39, 63);
+    background-color: rgb(255, 255, 255);
 
   }
   /* Base Styles */
@@ -29,9 +29,9 @@
     font-family: var(--font-main);
     line-height: 1.6;
     color: var(--dark);
-    background-color: wheat;
+    background-color: rgb(191, 206, 214);
     padding: 2rem;
-    max-width: 3000px;
+    width: 1000px;
     margin: 0 auto;
     min-height: 100vh;
   }

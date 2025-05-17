@@ -1,6 +1,6 @@
 <%- include('partials/appheader') %>
 
-<main style="padding: 2rem; max-width: 900px; margin: auto; font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #f4f9ff, #ffffff); min-height: 100vh;">
+<main style="padding: 2rem; max-width: 900px; margin: auto; font-family: 'Segoe UI', sans-serif; background: linear-gradient(to bottom, #457B9D, #ffffff); min-height: 100vh;width: 1000px;">
   <h2 style="font-size: 2rem; font-weight: bold; color: #2c3e50;">💸 Expense Tracker</h2>
   <p style="margin-bottom: 1.5rem; color: #555;">Track how your funding is being spent.</p>
 
@@ -34,11 +34,11 @@
     </form>
   </section>
 
-  <section style="background-color: #fdfdfd; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+  <section style="background-color: #243050; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
     <h3 style="margin-bottom: 1rem; color: #34495e;">📑 Expense Records</h3>
     <% if (expenses.length > 0) { %>
       <table style="width: 100%; border-collapse: collapse;">
-        <thead style="background-color: #ecf0f1;">
+        <thead style="background-color: #243050;">
           <tr>
             <th style="padding: 0.75rem; text-align: left; font-weight: bold;">Date</th>
             <th style="padding: 0.75rem; text-align: left; font-weight: bold;">Description</th>
@@ -48,7 +48,7 @@
         </thead>
         <tbody>
           <% expenses.forEach(exp => { %>
-            <tr style="border-bottom: 1px solid #ddd;">
+            <tr style="border-bottom: 1px solid #120d42;">
               <td style="padding: 0.75rem;"><%= exp.date ? new Date(exp.date).toLocaleDateString() : 'N/A' %></td>
               <td style="padding: 0.75rem;"><%= exp.description || '—' %></td>
               <td style="padding: 0.75rem; text-align: center;">R <%= typeof exp.amount === 'number' ? exp.amount.toFixed(2) : '0.00' %></td>

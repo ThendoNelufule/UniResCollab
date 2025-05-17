@@ -1,5 +1,6 @@
 const Project = require('../Models/project');
 const User = require('../Models/userModel'); 
+const Report = require('../Models/Reports');
 
 // This is the function to create project API
 exports.createProject = async (req, res) => {
@@ -272,5 +273,40 @@ exports.addCollaborator = async (req, res) => {
 };
 
 
+exports.publishProject = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // 1. Find the project
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // 2. Create a new report
+    const reportData = {
+      title: project.title,
+      domain: project.domain,
+      abstract: project.abstract,
+      startDate: project.startDate,
+      endDate: project.endDate,
+      methodology: project.methodology,
+      pi: project.pi,
+      institution: project.institution,
+      collaborators: project.collaborators,
+      visibility: 'published',
+      projectId: project._id
+    };
+
+    const report = new Report(reportData);
+    await report.save();
+
+    res.redirect(`/researcher/projects/project-details/${projectId}`);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error while publishing project' });
+  }
+};
 
 

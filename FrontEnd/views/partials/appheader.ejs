@@ -15,7 +15,12 @@
   <link rel="stylesheet" href="/styles/admin.css">
   <link rel="stylesheet" href="/styles/friends.css">
   <link rel="stylesheet" href="/styles/chat.css">
-  <link rel="stylesheet" href="/styles/fund.css">
+  <link rel="stylesheet" href="/styles/share.css">
+  <link rel="stylesheet" href="/styles/review.css">
+  <link rel="stylesheet" href="/styles/feedback.css">
+  <link rel="stylesheet" href="/styles/analysis.css">
+  <link rel="stylesheet" href="/styles/publication.css">
+  <link rel="stylesheet" href="/styles/allprojects.css">
   <link rel="stylesheet" href="/styles/reviewerHome.css">
   <link rel="stylesheet" href="/styles/project-details.css">
   
@@ -43,21 +48,40 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <!-- Top Header with Navigation -->
 <header class="site-header">
   <nav class="navbar">
-    <a href="/" class="brand-link">
-      <!-- Emblem: Book + Collaboration Node Icon -->
+    <a href="/home" class="brand-link">
+      <!-- Emblem Icon -->
       <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="#ffffff">
         <path d="M3 4.5V20c0 .55.45 1 1 1h13v-1H4V4.5h13v-1H4c-.55 0-1 .45-1 1zm17-1h-6v17h6c.55 0 1-.45 1-1V4.5c0-.55-.45-1-1-1zm-2.5 11.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
       </svg>
       UniResCollab
     </a>
 
+    
+
+    <!-- Regular Links -->
     <nav class="nav-links">
-      <a href="/AI-Page" class="toggle-ai-btn">
-        🤖 Chat with UniResCollab AI
-    </a>
-    <a href="/tools/friends" class="btn-fill">Collab ChatSpace</a>
+      <a href="/AI-Page" class="toggle-ai-btn">🤖 Chat with UniResCollab AI</a>
+      <a href="/tools/friends" class="toggle-ai-btn">Collab ChatSpace</a>
+       <!-- Dropdown Menu Button for Collab ChatSpace -->
+  <section class="menu-container">
+    <button class="menu-button">☰ Menu</button>
+    <section class="dropdown-menu">
       <a href="/logout" class="btn-filled">Log Out</a>
       <a href="/about">About</a>
+      <a href="/tools/fund">funding</a>
+      <a href="/researcher/projects/my-projects">My Projects</a>
+      <a href="/researcher/projects/create">Create</a>
+      <a href="/tools/review/publications">publications</a>
+      <a href="/files/share">Files</a>
+      <a href="/researcher/projects/all">All Projects</a>
+      <a href="/Reviewer/Home">Become a Reviewer</a>
+    </section>
+  </section>
     </nav>
+
+
   </nav>
+
 </header>
+
+

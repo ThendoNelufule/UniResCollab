@@ -1,7 +1,7 @@
 <%- include('partials/appheader') %>
 
 <section class="container py-4">
-  <h2 class="text-center mb-4">Invite Collaborators</h2>
+  <h2 class="text-center mb-4" style="color: black;">Invite Collaborators</h2>
 
   <section class="card p-4 shadow-sm">
     <!-- Search bar -->
@@ -16,7 +16,7 @@
     </section>
 
     <!-- Already invited collaborators -->
-    <h5>Invited Collaborators</h5>
+    <h5 class="h1invite" style="color: black;">Invited Collaborators</h5>
     <ul id="invitedList" class="list-group">
       <% invitedUsers.forEach(user => { %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -113,7 +113,7 @@
 
     const badge = document.createElement('span');
     badge.classList.add('badge', 'bg-success');
-    badge.textContent = 'Added';
+    badge.textContent = ' Added';
 
     listItem.appendChild(usernameSpan);
     listItem.appendChild(badge);
