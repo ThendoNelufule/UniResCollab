@@ -12,12 +12,12 @@
             <section class="card p-3 shadow-sm h-100 d-flex flex-column justify-content-between">
               <section>
                 <h5><%= project.title %></h5>
-                <p class="text-muted mb-2"><%= project.methodology || 'No methodology available.' %></p>
+                <p class="text-muted mb-2">methodology: <%= project.methodology || 'No methodology available.' %></p>
               </section>
 
               <section style="margin-top: 1rem; display: grid; row-gap: 10px;">
-                <a href="/researcher/projects/project-details/<%= project._id %>" class="btn btn-sm btn-outline-primary mb-2">
-                  Project Details
+                <a href="/tools/review/publications" class="btn btn-sm btn-outline-primary mb-2">
+                  See if published yet
                 </a>
 
                 <!-- Review Button -->

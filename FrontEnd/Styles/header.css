@@ -149,7 +149,7 @@ main#researcher {
 /* Footer Styles */
 .main-footer {
     background: var(--space-cadet);
-    color: var(--honeydew);
+    color: white;
     padding: 4rem 2rem;
     margin-top: auto;
     background-color:  #0a0f1f;
@@ -159,12 +159,13 @@ main#researcher {
     max-width: 1440px;
     margin: 0 auto;
     text-align: center;
+    color: white;
 }
 
 .logo {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--powder-blue);
+    color: white;
     margin-bottom: 1.5rem;
 }
 
