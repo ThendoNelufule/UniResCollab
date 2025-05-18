@@ -52,14 +52,19 @@ router.get('/report/:id/completion-status', async (req, res) => {
 router.get('/report/:id/funding-status', async (req, res) => {
   try {
     const reportId = req.params.id;
-    const userId = req.user._id;
 
+    // Step 1: Get the report
     const report = await Report.findById(reportId);
     if (!report) return res.status(404).send('Report not found');
 
-    const fundings = await Funding.find({ createdBy: userId });
+    // Step 2: Get the project associated with this report
+    const project = await Project.findById(report.projectId);
+    if (!project) return res.status(404).send('Project not found');
 
-    // For each funding, calculate total expenses
+    // Step 3: Get all fundings created by the user who created the project
+    const fundings = await Funding.find({ createdBy: project.user });
+
+    // Step 4: Calculate funding data (optional: filter by project if needed)
     const fundingData = await Promise.all(
       fundings.map(async (fund) => {
         const expenses = await Expense.find({ fundingId: fund._id });
@@ -79,12 +84,12 @@ router.get('/report/:id/funding-status', async (req, res) => {
 
     res.render('funding-status', { report, fundings: fundingData });
 
-
   } catch (error) {
     console.error(error);
     res.status(500).send('Error loading funding status');
   }
 });
+
 
 router.get('/report/:id/custom-view', async (req, res) => {
   const report = await Report.findById(req.params.id);
