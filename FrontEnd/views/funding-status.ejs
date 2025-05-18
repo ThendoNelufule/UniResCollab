@@ -57,12 +57,12 @@
   <% if (fundings && fundings.length > 0) { %>
     <% fundings.forEach(fund => { %>
       <section class="funding-block">
-        <p><span class="highlight">Title:</span> <%= fund.title %></p>
-        <p><span class="highlight">Source:</span> <%= fund.source %></p>
-        <p><span class="highlight">Total Amount:</span> $<%= fund.totalAmount.toLocaleString() %></p>
-        <p><span class="highlight">Amount Spent:</span> $<%= fund.amountSpent.toLocaleString() %></p>
-        <p><span class="highlight">Remaining:</span> $<%= (fund.totalAmount - fund.amountSpent).toLocaleString() %></p>
-        <p><span class="highlight">Duration:</span> <%= fund.startDate ? fund.startDate.toDateString() : 'N/A' %> to <%= fund.endDate ? fund.endDate.toDateString() : 'N/A' %></p>
+        <p><strong class="highlight">Title:</strong> <%= fund.title %></p>
+        <p><strong class="highlight">Source:</strong> <%= fund.source %></p>
+        <p><strong class="highlight">Total Amount:</strong> R<%= fund.totalAmount.toLocaleString() %></p>
+        <p><strong class="highlight">Amount Spent:</strong> R<%= fund.amountSpent.toLocaleString() %></p>
+        <p><strong class="highlight">Remaining:</strong> R<%= (fund.totalAmount - fund.amountSpent).toLocaleString() %></p>
+        <p><strong class="highlight">Duration:</strong> <%= fund.startDate ? fund.startDate.toDateString() : 'N/A' %> to <%= fund.endDate ? fund.endDate.toDateString() : 'N/A' %></p>
       </section>
     <% }) %>
   <% } else { %>
