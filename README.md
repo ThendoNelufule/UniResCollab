@@ -29,4 +29,4 @@ A web-based platform designed to facilitate collaboration among university resea
 
 ---
 
-Let me know if you’d like me to help you add a screenshot or project banner to polish it further.
+
